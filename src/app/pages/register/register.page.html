@@ -1,0 +1,141 @@
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <swiper-container #swiper (afterinit)="swiperReady()" [slidesPerView]="1" [spaceBetween]="10" [autoplay]="true"
+      (slidechange)="swiperSlideChange($event)" [loop]="sliders.length>1 ? true :false" direction="horizontal"
+      [pagination]="{clickable:true,dynamicBullets:true}">
+      <swiper-slide *ngFor="let slid of sliders">
+        <img [src]="slid?.image" alt="">
+      </swiper-slide>
+      <swiper-slide *ngIf="!sliders.length">
+        <ion-skeleton-text animated style="width: 100%;height: 200px;"></ion-skeleton-text>
+      </swiper-slide>
+    </swiper-container>
+    <div class="lineCall">
+      <p>اتصل بنا فى حالة وجود مشكلة</p>
+      <img src="../../../assets/images/call.svg" alt="">
+    </div>
+    <!-- <div class="segment_box animate__animated animate__zoomIn">
+      <ion-segment mode="ios" [(ngModel)]="view" (ionChange)="segmentChanged($event)">
+        <ion-segment-button [value]="1">
+          <ion-label>عميل</ion-label>
+        </ion-segment-button>
+        <ion-segment-button [value]="2">
+          <ion-label>مندوب</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div> -->
+
+    <h2>طلب اشتراك</h2>
+
+    <form [formGroup]="form">
+      <div class="item_box animate__animated animate__fadeInUp duration ">
+        <div class="name">
+          <p>الاسم</p>
+        </div>
+        <ion-item>
+          <ion-input type="text" formControlName="name" placeholder="ادخل الاسم ثلاثي">
+          </ion-input>
+
+        </ion-item>
+      </div>
+      <div class="item_box animate__animated animate__fadeInUp duration ">
+        <div class="name">
+          <p>رقم الهاتف</p>
+        </div>
+        <ion-item>
+          <ion-input type="tel" formControlName="phone" placeholder="ادخل رقم الهاتف">
+          </ion-input>
+          <ion-label slot="end" class="positioned-element">+964
+          </ion-label>
+        </ion-item>
+      </div>
+
+      <div class="item_box  animate__animated animate__fadeInUp duration">
+        <div class="name">
+          <p>كلمة المرور </p>
+        </div>
+        <ion-item>
+          <ion-button slot="end" (click)="showPassword = !showPassword" fill="clear">
+            <ion-icon [name]="showPassword ? 'eye-off-outline' :'eye-outline' ">
+            </ion-icon>
+          </ion-button>
+          <ion-input placeholder="ادخل كلمة المرور" formControlName="password"
+            [type]="showPassword ?'text' :'password'">
+          </ion-input>
+        </ion-item>
+      </div>
+      <div class="item_box  animate__animated animate__fadeInUp duration">
+        <div class="name">
+          <p>الموقع</p>
+        </div>
+        <ion-item (click)="getLocation()">
+          <!-- <ion-input  placeholder="">
+                        </ion-input> -->
+          <ion-label slot="end" class="positioned-element">
+            <img src="../../../assets/images/location.svg" alt="">
+          </ion-label>
+        </ion-item>
+      </div>
+
+
+      <ion-button class="submit  animate__animated animate__fadeIn duration" expand="block" (click)="register()">
+        <!-- <ion-icon name="checkmark-done-circle-outline"></ion-icon> -->
+        اشتراك
+      </ion-button>
+
+      <ion-button fill="clear" class="addtocart  animate__animated animate__fadeIn duration" expand="block"
+        (click)="nav('login')">
+        <!-- <ion-icon name="add-outline"></ion-icon> -->
+        تسجيل دخول
+
+      </ion-button>
+
+
+
+    </form>
+    <!-- <form *ngIf="view == 9">
+
+      <div class="item_box animate__animated animate__fadeInUp duration ">
+        <div class="name">
+          <p>رقم الهاتف</p>
+        </div>
+        <ion-item>
+          <ion-input type="tel" placeholder="">
+          </ion-input>
+          <ion-label slot="end" class="positioned-element">+964
+          </ion-label>
+        </ion-item>
+      </div>
+
+      <div class="item_box  animate__animated animate__fadeInUp duration">
+        <div class="name">
+          <p>كلمة المرور </p>
+        </div>
+        <ion-item>
+          <ion-button slot="end" (click)="showPassword = !showPassword" fill="clear">
+            <ion-icon [name]="showPassword ? 'eye-off-outline' :'eye-outline' ">
+            </ion-icon>
+          </ion-button>
+          <ion-input placeholder="" [type]="showPassword ?'text' :'password'">
+          </ion-input>
+        </ion-item>
+      </div>
+
+      <div class="item_box  animate__animated animate__fadeInUp duration">
+        <div class="name">
+          <p>الموقع</p>
+        </div>
+        <ion-item>
+          <ion-input type="text" placeholder="">
+          </ion-input>
+        </ion-item>
+      </div>
+
+
+      <ion-button class="login  animate__animated animate__zoomIn duration" expand="block" [disabled]="">
+        تسجيل </ion-button>
+
+    </form> -->
+
+  </div>
+</ion-content>

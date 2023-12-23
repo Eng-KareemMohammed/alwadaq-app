@@ -1,0 +1,127 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <img src="../../../assets/images/logo-part1.png" alt="">
+      <img src="../../../assets/images/logo-part2.png" alt="">
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div class="container">
+    <h1>قائمة العملاء</h1>
+
+    <div class="searchBar">
+      <ion-searchbar mode="ios" placeholder="ابحث عن عميل"></ion-searchbar>
+    </div>
+
+    <div class="client_box" *ngFor="let client of clients">
+      <div class="topLine">
+        <div class="start">
+          <p>{{client?.name}}</p>
+          <p>{{client?.phone}}</p>
+        </div>
+        <div class="end">
+          <p *ngIf="client?.alertStatus==1">سينتهي</p>
+          <p *ngIf="client?.alertStatus==0" style="background: var(--ion-color-danger);">منتهي</p>
+          <p *ngIf="client?.alertStatus==2" style="background: var(--ion-color-success);color: #fff;">فعال</p>
+
+          <img (click)="presentPopover($event,client)" src="../../../assets/images/options.svg" alt="">
+        </div>
+      </div>
+    </div>
+    <div *ngIf="loading" class="loading">
+      <ion-spinner name="bubbles"></ion-spinner>
+    </div>
+
+    <div *ngIf="emptyView" class="empty-view">
+      <div class="content">
+        <ion-icon name="happy-outline"></ion-icon>
+        <ion-text color="medium">
+          <p>لا يوجد بيانات حاليا</p>
+        </ion-text>
+      </div>
+    </div>
+
+    <div *ngIf="errorView" class="error-view">
+      <div class="content">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <ion-text color="medium">
+          <p>خطأ بالشبكة حاول مجددا</p>
+        </ion-text>
+      </div>
+    </div>
+  </div>
+  <ion-popover mode="ios" [isOpen]="isOpen" (didDismiss)="isOpen = false" #popover size="auto">
+    <ng-template>
+      <ion-content class="ion-padding text-center">
+        <!-- <ion-list> -->
+        <ion-item button (click)="edit()" detail="false">
+          <ion-label>تعديل</ion-label>
+        </ion-item>
+        <ion-item button (click)="addOrder()" detail="false">
+          <ion-label>اضافة تعبئة</ion-label>
+        </ion-item>
+        <!-- <ion-item button >
+            <ion-label>عرض الموقع</ion-label>
+          </ion-item> -->
+        <!-- </ion-list> -->
+      </ion-content>
+    </ng-template>
+  </ion-popover>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button mode="ios" (click)="nav('add-client')">
+      <ion-icon name="add"></ion-icon>
+      عميل
+    </ion-fab-button>
+  </ion-fab>
+  <ion-infinite-scroll threshold="25%" position="bottom" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-modal [isOpen]="isModelOpen" (ionModalDidDismiss)="isModelOpen=false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>اختر الخدمة</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="isModelOpen= false">الغاء</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-list>
+          <!-- <ion-item *ngFor="let item of services" (click)="selectedService = item._id;">
+              {{ item.name }}
+
+            </ion-item> -->
+
+          <div class="item_service_box" *ngFor="let service of services" (click)="selectedService = service._id">
+            <div class="start">
+              <p>{{service?.name}}</p>
+              <p>{{service?.alert_days}} يوم</p>
+            </div>
+            <div class="end">
+
+              <p>{{service?.price |number}} دينار </p>
+              <p>{{service?.price - service?.discount_amount |number}} دينار </p>
+            </div>
+            <!-- <ion-checkbox [checked]="selectedService==service._id" slot="end"></ion-checkbox>
+              <ion-icon  slot="end" name="chec"></ion-icon> -->
+            <div>
+              <ion-icon class="select-mark" [class.mark]="selectedService==service._id"
+                name="checkmark-done-circle-outline"></ion-icon>
+            </div>
+
+          </div>
+          <ion-button expand="block" class="ion-margin" mode="ios" (click)="confirmOrder()">تأكيد</ion-button>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

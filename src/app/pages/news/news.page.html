@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <img src="../../../assets/images/logo-part1.png" alt="">
+      <img src="../../../assets/images/logo-part2.png" alt="">
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div class="container">
+    <h1>الاخبار</h1>
+
+    <div class="myItem" *ngFor="let new of news">
+      <div class="head">
+        <img [src]="new?.image" alt="">
+      </div>
+      <span class="date">{{new?.createdAt |date}}</span>
+      <div class="myTitle">{{new?.title}}</div>
+      <p class="myText">
+        {{new?.body}}
+      </p>
+    </div>
+    <div *ngIf="loading" class="loading">
+      <ion-spinner name="bubbles"></ion-spinner>
+    </div>
+
+    <div *ngIf="emptyView" class="error-view">
+      <div class="content">
+        <ion-icon name="happy-outline"></ion-icon>
+        <ion-text color="medium">
+          <p>لا يوجد بيانات حاليا</p>
+        </ion-text>
+      </div>
+    </div>
+
+    <div *ngIf="errorView" class="error-view">
+      <div class="content">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <ion-text color="medium">
+          <p>خطأ بالشبكة حاول مجددا</p>
+        </ion-text>
+      </div>
+    </div>
+  </div>
+  <ion-infinite-scroll threshold="25%" position="bottom" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

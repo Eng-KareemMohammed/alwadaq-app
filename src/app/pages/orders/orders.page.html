@@ -1,0 +1,95 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <img src="../../../assets/images/logo-part1.png" alt="">
+      <img src="../../../assets/images/logo-part2.png" alt="">
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button shape="round" (click)="logOut()">
+        <img src="../../../assets/images/logout.svg" alt="">
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <div class="header-orders">
+      <p>مستعد لتلقى طلبات</p>
+      <ion-toggle mode="ios" [(ngModel)]="active" [checked]="active"
+        (ngModelChange)="activeChange($event)"></ion-toggle>
+    </div>
+
+    <h1>طلبات التعبئة</h1>
+  </div>
+  <div class="line-segment animate__animated animate__zoomIn fast">
+    <div class="box ion-activatable ripple-parent " [class.active]="status==1" (click)="status=1;orders=[];getOrders()">
+      <ion-ripple-effect></ion-ripple-effect>
+      <p>جديد</p>
+    </div>
+    <div class="box ion-activatable ripple-parent " [class.active]="status==2" (click)="status=2;orders=[];getOrders()">
+      <ion-ripple-effect></ion-ripple-effect>
+      <p>انتظار</p>
+    </div>
+
+    <!-- <div class="box ion-activatable ripple-parent " [class.active]="status==2" (click)="status=2;getOrders()">
+      <ion-ripple-effect></ion-ripple-effect>
+      <p>قيد التوصيل</p>
+    </div> -->
+
+    <div class="box ion-activatable ripple-parent " [class.active]="status==3" (click)="status=3;orders=[];getOrders()">
+      <ion-ripple-effect></ion-ripple-effect>
+      <p>منتهية</p>
+    </div>
+
+    <!-- <div class="box ion-activatable ripple-parent " [class.active]="status==0" (click)="status=0;getOrders()">
+      <ion-ripple-effect></ion-ripple-effect>
+      <p>ملغاه</p>
+    </div> -->
+  </div>
+  <div class="container">
+
+    <div class="item_box animate__animated animate__fadeIn" *ngFor="let order of orders;let i = index;trackBy:trackFn">
+      <div class="start" (click)="details(order)">
+        <p>طلب {{order?.service_id?.name}}</p>
+        <p>{{order.createdAt|date}} - <span>{{order?.client_id?.name}}</span> </p>
+      </div>
+      <div class="end">
+        <ion-button *ngIf="order.status==1" fill="clear" color="dark" shape="round" (click)="accept(order)">
+          قبول
+        </ion-button>
+        <ion-button *ngIf="order.status==2" fill="clear" color="dark" shape="round" (click)="finish(order)">
+          تم التعبئة
+        </ion-button>
+      </div>
+    </div>
+
+  </div>
+  <div *ngIf="loading" class="loading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+
+  <div *ngIf="emptyView" class="empty-view">
+    <div class="content">
+      <ion-icon name="happy-outline"></ion-icon>
+      <ion-text color="medium">
+        <p>لا يوجد بيانات حاليا</p>
+      </ion-text>
+    </div>
+  </div>
+
+  <div *ngIf="errorView" class="error-view">
+    <div class="content">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <ion-text color="medium">
+        <p>خطأ بالشبكة حاول مجددا</p>
+      </ion-text>
+    </div>
+  </div>
+
+  <ion-infinite-scroll threshold="10%" [disabled]="disable" position="bottom" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

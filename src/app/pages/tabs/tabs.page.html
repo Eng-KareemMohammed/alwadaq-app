@@ -1,0 +1,25 @@
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button #tab1 tab="home">
+      <div class="inner_btn">
+
+        <ion-img src="../../../assets/images/home{{tab1.selected?'_act':''}}.svg"></ion-img>
+        <ion-label>الرئيسية</ion-label>
+      </div>
+    </ion-tab-button>
+    <ion-tab-button #tab2 tab="news">
+      <div class="inner_btn">
+
+        <ion-img src="../../../assets/images/news{{tab2.selected?'_act':''}}.svg"></ion-img>
+        <ion-label>الاخبار</ion-label>
+      </div>
+    </ion-tab-button>
+    <ion-tab-button #tab3 tab="about">
+      <div class="inner_btn">
+
+        <ion-img src="../../../assets/images/about{{tab3.selected?'_act':''}}.svg"></ion-img>
+        <ion-label>من نحن</ion-label>
+      </div>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

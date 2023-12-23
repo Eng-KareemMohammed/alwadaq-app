@@ -24,3 +24,164 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+@font-face {
+  font-family: "bold";
+  src: url("./assets/fonts/SomarSans-Bold.otf");
+}
+@font-face {
+  font-family: "semiBold";
+  src: url("./assets/fonts/SomarSans-SemiBold.otf");
+}
+
+@font-face {
+  font-family: "regular";
+  src: url("./assets/fonts/SomarSans-Regular.otf");
+}
+
+* {
+  font-family: "regular";
+}
+
+body {
+  direction: rtl;
+}
+
+ion-header {
+  &::after {
+    display: none;
+  }
+}
+
+.header-ios ion-toolbar:last-of-type {
+  --border-width: 0 !important;
+}
+ion-input {
+  input {
+    direction: rtl;
+  }
+}
+.sc-ion-searchbar-ios-h {
+  min-height: 48px;
+}
+swiper-container {
+  width: 100%;
+  // height: 100%;
+  // padding-inline: 14px;
+  margin-block: 18px;
+  direction: ltr;
+  --swiper-pagination-bullet-inactive-color: var(--ion-color-step-200, #cccccc);
+  --swiper-pagination-color: var(--ion-color-primary, #3880ff);
+  --swiper-pagination-progressbar-bg-color: rgba(
+    var(--ion-text-color-rgb, 0, 0, 0),
+    0.25
+  );
+  --swiper-scrollbar-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.1);
+  --swiper-scrollbar-drag-bg-color: rgba(
+    var(--ion-text-color-rgb, 0, 0, 0),
+    0.5
+  );
+
+  &::part(bullet) {
+    background-color: white;
+    opacity: 0.6;
+    // @include size(18, 6);
+    width: 18px;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(89deg, #b7d712 1.17%, #3e7903 96.11%);
+    opacity: 0.3;
+  }
+  &::part(bullet-active) {
+    // @include size(18, 6);
+    width: 18px;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(89deg, #b7d712 1.17%, #3e7903 96.11%);
+  }
+}
+swiper-slide {
+  display: flex;
+  position: relative;
+
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+  // min-height: 180px;
+  max-height: 200px;
+  font-size: 18px;
+  border-radius: 12px;
+  overflow: hidden;
+
+  text-align: center;
+  box-sizing: border-box;
+
+  ion-skeleton-text {
+    border-radius: 12px;
+  }
+}
+
+swiper-slide img {
+  width: 100%;
+  max-width: 100%;
+  height: 200px;
+  max-height: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.error-view {
+  // background: #fff;
+  position: absolute;
+  /* top: 0; */
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  z-index: 99999;
+  background: #fff;
+
+  .content {
+    text-align: center;
+
+    ion-icon {
+      font-size: 64px;
+    }
+  }
+}
+
+.loading {
+  background: #fff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  z-index: 99999;
+}
+.empty-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 200px 50px;
+
+  .content {
+    ion-icon {
+      font-size: 64px;
+    }
+  }
+}

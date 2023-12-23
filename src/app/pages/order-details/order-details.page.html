@@ -1,0 +1,99 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-forward-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      تفاصيل الاوردر
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="container">
+
+    <div class="myHeader">
+      <div class="start">
+        <!-- <img src="../../../assets/images/QrCode.svg" alt=""> -->
+        <div class="content">
+          <p>اسم العميل</p>
+          <p>{{order?.client_id?.name}}</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="item_box">
+      <div class="start">
+        <img src="../../../assets/images/location.svg" alt="">
+        <p>
+          الموقع
+        </p>
+      </div>
+      <p class="end">
+        <ion-button class="submit" fill="clear" shape="round" (click)="openMap()">
+          عرض
+        </ion-button>
+      </p>
+    </div>
+    <div class="item_box">
+      <div class="start">
+        <p>
+          رقم الهاتف
+        </p>
+      </div>
+      <p class="end">
+        {{order?.client_id?.phone}}
+      </p>
+    </div>
+    <div class="item_box">
+      <div class="start">
+        <p>
+          تاريخ الطلب
+        </p>
+      </div>
+      <p class="end">
+        {{order?.createdAt|date}}
+      </p>
+    </div>
+    <div class="item_box">
+      <div class="start">
+        <p>
+          الخدمة
+        </p>
+      </div>
+      <p class="end">
+        {{order?.service_id?.name}}
+      </p>
+    </div>
+    <div class="item_box">
+      <div class="start">
+        <p>
+          السعر
+        </p>
+      </div>
+      <p class="end">
+        {{order?.service_id?.price - order?.service_id?.discount_amount |number}}
+      </p>
+    </div>
+    <div class="item_box">
+      <div class="start">
+        <p>
+          عمولة المندوب
+        </p>
+      </div>
+      <p class="end">
+        {{order?.service_id?.delegate_commission |number}} %
+      </p>
+    </div>
+    <div class="item_box">
+      <div class="start">
+        <p>
+          المنطقة
+        </p>
+      </div>
+      <p class="end">
+        {{order?.zone_id?.name }}
+      </p>
+    </div>
+  </div>
+</ion-content>

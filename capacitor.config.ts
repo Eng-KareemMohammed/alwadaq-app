@@ -1,12 +1,13 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'app.alwadaq.com',
   appName: 'alwadaq-app',
   webDir: 'www',
   server: {
-    androidScheme: 'https'
-  }
+    cleartext: true,
+    allowNavigation: ['*'],
+  },
 };
 
 export default config;

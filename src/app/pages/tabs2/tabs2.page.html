@@ -1,0 +1,36 @@
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button #tab1 tab="orders">
+      <div class="inner_btn">
+        <ion-img src="../../../assets/images/home{{tab1.selected?'_act':''}}.svg"></ion-img>
+      </div>
+      <ion-label>طلبات التعبئة</ion-label>
+    </ion-tab-button>
+    <ion-tab-button #tab2 tab="clients">
+      <div class="inner_btn">
+        <ion-img src="../../../assets/images/clients{{tab2.selected?'_act':''}}.svg"></ion-img>
+      </div>
+      <ion-label>عملاء</ion-label>
+    </ion-tab-button>
+    <ion-tab-button #tab3 tab="services">
+      <div class="inner_btn">
+        <ion-img src="../../../assets/images/services{{tab3.selected?'_act':''}}.svg"></ion-img>
+      </div>
+      <ion-label>خدمات</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button #tab4 tab="news">
+      <div class="inner_btn">
+        <ion-img src="../../../assets/images/news{{tab4.selected?'_act':''}}.svg"></ion-img>
+      </div>
+      <ion-label>اخبار</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button #tab5 tab="about">
+      <div class="inner_btn">
+        <ion-img src="../../../assets/images/about{{tab5.selected?'_act':''}}.svg"></ion-img>
+      </div>
+      <ion-label>من نحن</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

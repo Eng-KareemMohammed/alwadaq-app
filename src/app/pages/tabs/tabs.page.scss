@@ -1,0 +1,41 @@
+ion-tab-bar {
+  --border: 0;
+  --background: transparent;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+ion-tab-button {
+  font-size: 10px;
+  --ripple-color: transparent;
+  .inner_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    border-radius: 16px;
+    gap: 6px;
+    padding: 8px 12px;
+    // background: linear-gradient(
+    //   89deg,
+    //   rgba(183, 215, 18, 0.07) 1.17%,
+    //   rgba(62, 121, 3, 0.07) 96.11%
+    // );
+    // ion-img {
+    //   margin-inline-end: 6px;
+    // }
+  }
+
+  &.tab-selected {
+    .inner_btn {
+      background: linear-gradient(
+        89deg,
+        rgba(183, 215, 18, 0.07) 1.17%,
+        rgba(62, 121, 3, 0.07) 96.11%
+      );
+      color: #3e7903;
+    }
+  }
+}

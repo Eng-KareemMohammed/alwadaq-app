@@ -1,0 +1,109 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <img src="../../../assets/images/logo-part1.png" alt="">
+      <img src="../../../assets/images/logo-part2.png" alt="">
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <div class="myHeader">
+      <div class="start">
+        <img src="../../../assets/images/QrCode.svg" alt="">
+        <div class="content">
+          <p>{{authService.userData?.name}}</p>
+          <p>{{authService.userData?.phone}}</p>
+
+        </div>
+      </div>
+      <img src="../../../assets/images/logout.svg" alt="" (click)="logOut()">
+    </div>
+  </div>
+  <div class="line" *ngIf="authService.userData?.lastOrder">
+    <p class="start">نوع الخزان</p>
+    <p class="end">بلاستيك</p>
+  </div>
+  <div class="container">
+
+    <ion-button mode="ios" class="submit animate__animated animate__fadeIn duration" expand="block"
+      (click)="isModelOpen =true">
+      طلب التعبئة
+    </ion-button>
+
+    <div class="item_box animate__animated animate__fadeIn duration">
+      <div class="image">
+        <ion-img src="../../../assets/images/item1.svg"></ion-img>
+      </div>
+      <div class="name">
+        عرض المستمسكات
+      </div>
+    </div>
+    <div class="item_box animate__animated animate__fadeIn duration">
+      <div class="image">
+        <ion-img src="../../../assets/images/item2.svg"></ion-img>
+      </div>
+      <div class="name">
+        تغيير كلمة السر
+      </div>
+    </div>
+    <div class="item_box animate__animated animate__fadeIn duration">
+      <div class="image">
+        <ion-img src="../../../assets/images/item3.svg"></ion-img>
+      </div>
+      <div class="name">
+        اتصل بنا
+      </div>
+    </div>
+    <div class="item_box animate__animated animate__fadeIn duration">
+      <div class="image">
+        <ion-img src="../../../assets/images/item4.svg"></ion-img>
+      </div>
+      <div class="name" style="color: rgba(255, 136, 136, 1);">
+        تعطيل الحساب
+      </div>
+    </div>
+  </div>
+  <ion-modal [isOpen]="isModelOpen" (ionModalDidDismiss)="isModelOpen=false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>اختر الخدمة</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="isModelOpen= false">الغاء</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-list>
+          <!-- <ion-item *ngFor="let item of services" (click)="selectedService = item._id;">
+            {{ item.name }}
+
+          </ion-item> -->
+
+          <div class="item_service_box" *ngFor="let service of services" (click)="selectedService = service._id">
+            <div class="start">
+              <p>{{service?.name}}</p>
+              <p>{{service?.alert_days}} يوم</p>
+            </div>
+            <div class="end">
+
+              <p>{{service?.price |number}} دينار </p>
+              <p>{{service?.price - service?.discount_amount |number}} دينار </p>
+            </div>
+            <!-- <ion-checkbox [checked]="selectedService==service._id" slot="end"></ion-checkbox>
+            <ion-icon  slot="end" name="chec"></ion-icon> -->
+            <div>
+              <ion-icon class="select-mark" [class.mark]="selectedService==service._id"
+                name="checkmark-done-circle-outline"></ion-icon>
+            </div>
+
+          </div>
+          <ion-button expand="block" class="ion-margin" mode="ios" (click)="confirmOrder()">تأكيد</ion-button>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

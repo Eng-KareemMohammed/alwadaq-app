@@ -1,0 +1,20 @@
+<ion-content>
+
+  <div class="error-view">
+    <div class="content">
+      <ion-icon name="happy-outline"></ion-icon>
+      <ion-text color="medium">
+        <p>سيتم مراجعة طلبك من الادارة والموافقة عليه</p>
+      </ion-text>
+      <ion-button mode="ios" (click)="check()" expand="block" shape="round">
+        تحقق من الامر ثانياَ
+      </ion-button>
+    </div>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed" (click)="logOut()">
+    <ion-fab-button fill="clear" color="danger">
+      <ion-icon name="exit"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

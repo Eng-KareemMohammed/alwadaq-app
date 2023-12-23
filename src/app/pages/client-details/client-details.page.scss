@@ -1,0 +1,131 @@
+ion-header {
+  border: none;
+  box-shadow: none;
+
+  ion-toolbar {
+    padding-top: 10px;
+  }
+
+  ion-title {
+    padding-inline-start: 0;
+    font-size: 16px;
+  }
+}
+.container {
+  padding: 16px 16px;
+  margin: auto;
+  max-width: 720px;
+}
+h1 {
+  font-size: 20px;
+  font-family: "bold";
+  margin-top: 0;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.16);
+  padding-bottom: 8px;
+  line-height: 32px;
+}
+.myHeader {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+
+  // padding-inline: 16px;
+  .content {
+    p {
+      margin: 0;
+    }
+    p:last-of-type {
+      font-size: 12px;
+      color: #8e8e8e;
+    }
+  }
+  .start {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  // border-bottom: 0.5px solid rgba(0, 0, 0, 0.24);
+  border-top: 1px solid rgba(0, 0, 0, 0.24);
+  padding-inline: 16px;
+  margin-bottom: 12px;
+  .start {
+    display: flex;
+    gap: 8px;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 20px;
+    margin: 0;
+  }
+  p.end {
+    color: rgba(0, 0, 0, 0.32);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+}
+
+.submit {
+  --ripple-color: #b7d712;
+  height: 32px;
+  width: 64px;
+  margin: 0;
+  border-radius: 25px;
+  --border-radius: 25px;
+  // font-family: "bold";
+  font-size: 14px;
+  line-height: 26px;
+  color: #fff;
+  --background: linear-gradient(89deg, #b7d712 1.17%, #3e7903 96.11%);
+}
+.item_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+
+  border-bottom: 1px solid #f3f3f3;
+  .start {
+    p {
+      margin: 0;
+    }
+    p:first-of-type {
+      margin-bottom: 6px;
+      color: var(--mid-color);
+    }
+    p:last-of-type {
+      color: var(--light-color);
+      font-size: 14px;
+
+      span {
+        background: linear-gradient(89deg, #b7d712 1.17%, #3e7903 96.11%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+  .end {
+    ion-button {
+      border-radius: 24px;
+      --border-radius: 24px;
+      // font-family: "bold";
+      // border: 1px solid #b7d712;
+      width: 54px;
+      font-size: 12px;
+      --color: #fff;
+      height: 26px;
+      background: #3e7903;
+    }
+  }
+}

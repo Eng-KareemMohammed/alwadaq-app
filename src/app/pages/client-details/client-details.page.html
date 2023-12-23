@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-forward-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      تفاصيل العميل
+    </ion-title>
+    <ion-button slot="end" fill="clear" shape="round">
+      <img src="../../../assets/images/options.svg" alt="">
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <div class="myHeader">
+      <div class="start">
+        <img src="../../../assets/images/QrCode.svg" alt="">
+        <div class="content">
+          <p>عراق سوفت</p>
+          <p>+964 750 555 1234</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="line">
+      <div class="start">
+        <img src="../../../assets/images/location.svg" alt="">
+        <p>
+          بناية 154, منطقة الكرادة، شارع الرشيد، بغداد، العراق
+        </p>
+      </div>
+      <p class="end">
+        <ion-button class="submit" fill="clear" shape="round">
+          عرض
+        </ion-button>
+      </p>
+    </div>
+
+    <h1>التعبئات السابقة</h1>
+    <div class="item_box" *ngFor="let i of [1,2,3,4]">
+      <div class="start">
+        <p>طلب #21445</p>
+        <p>24/12/2023 - <span>حسن خالد</span> </p>
+      </div>
+      <div class="end">
+        <ion-button fill="clear" shape="round">
+          مدفوع
+        </ion-button>
+      </div>
+    </div>
+
+
+  </div>
+</ion-content>

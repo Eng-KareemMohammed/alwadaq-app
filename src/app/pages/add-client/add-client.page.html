@@ -1,0 +1,129 @@
+<ion-header [hidden]="scanActive">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-forward-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{client ?'تعديل' :'اضافة'}} عميل
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [hidden]="scanActive">
+  <div class="container">
+    <h1 class="animate__animated animate__fadeIn">بيانات العميل</h1>
+    <form [formGroup]="form">
+
+
+      <div class="item_box animate__animated animate__fadeIn duration ">
+        <div class="name">
+          <p>اسم العميل ثلاثى</p>
+        </div>
+        <ion-item>
+          <ion-input type="text" formControlName="name" placeholder="ادخل اسم العميل...">
+          </ion-input>
+          <!-- <ion-label slot="end" class="positioned-element">
+              <img src="../../../assets/images/location.svg" alt="">
+            </ion-label> -->
+        </ion-item>
+      </div>
+      <div class="item_box animate__animated animate__fadeIn duration ">
+        <div class="name">
+          <p>رقم الهاتف</p>
+        </div>
+        <ion-item>
+          <ion-input type="tel" formControlName="phone" placeholder="ادخل  رقم الهاتف...">
+          </ion-input>
+          <ion-label slot="end" class="positioned-element">+964
+          </ion-label>
+        </ion-item>
+      </div>
+      <div class="item_box  animate__animated animate__fadeIn duration">
+        <div class="name">
+          <p>كلمة المرور </p>
+        </div>
+        <ion-item>
+          <ion-button slot="end" (click)="showPassword = !showPassword" fill="clear">
+            <ion-icon [name]="showPassword ? 'eye-off-outline' :'eye-outline' ">
+            </ion-icon>
+          </ion-button>
+          <ion-input placeholder="ادخل كلمة المرور..." formControlName="password"
+            [type]="showPassword ?'text' :'password'">
+          </ion-input>
+        </ion-item>
+      </div>
+      <!-- <div class="item_box animate__animated animate__fadeIn duration ">
+        <div class="name">
+          <p>المنطقة</p>
+        </div>
+        <ion-item>
+          <ion-select formControlName="zone_id" mode="ios" multiple="false" placeholder="المنطقة" [compareWith]="zones">
+            <ion-select-option *ngFor="let zone of zones" [value]="zone?._id">{{zone?.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div> -->
+      <div class="item_box animate__animated animate__fadeIn duration ">
+        <div class="name">
+          <p>الموقع</p>
+        </div>
+        <ion-item (click)="getLocation()">
+          <!-- <ion-input  placeholder="">
+                </ion-input> -->
+          <p>{{location?.lat |number}} - {{location?.lng |number}}</p>
+          <ion-label slot="end" class="positioned-element">
+            <img src="../../../assets/images/location.svg" alt="">
+          </ion-label>
+        </ion-item>
+      </div>
+
+      <h1>بيانات الخزان</h1>
+
+      <div class="item_box animate__animated animate__fadeIn duration ">
+        <div class="name">
+          <p>نوع الخزان</p>
+        </div>
+        <ion-item>
+          <ion-select formControlName="service_id" mode="ios" multiple="false" placeholder="الخدمة">
+            <ion-select-option *ngFor="let service of services"
+              [value]="service?._id">{{service?.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <div class="item_box animate__animated animate__fadeIn duration ">
+        <div class="name">
+          <p>باركود الخزان</p>
+        </div>
+        <ion-item>
+          <ion-input formControlName="service_barcode" type="text" placeholder="">
+          </ion-input>
+        </ion-item>
+        <ion-label slot="end" class="positioned-element" (click)="startScan()">
+          <img src="../../../assets/images/Scaner.svg" alt="">
+        </ion-label>
+      </div>
+    </form>
+  </div>
+
+  <ion-footer mode="ios">
+    <ion-toolbar>
+      <ion-button expand="block" fill="clear" (click)="submit()">
+        اضافة </ion-button>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>
+<div class="qr-content barcode-scanner-modal" [hidden]="!scanActive">
+  <h1>scan</h1>
+
+  <ion-row class="scan-button ">
+    <ion-col class="ion-no-padding">
+      <ion-button expand="block" color="primary" (click)="stopScanner()">
+        <ion-text color="light">
+          <p>الغاء</p>
+        </ion-text>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <div class="scan-box" [hidden]="!scanActive">
+  </div>
+</div>
