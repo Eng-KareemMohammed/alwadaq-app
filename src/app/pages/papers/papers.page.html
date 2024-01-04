@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-forward-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <img src="../../../assets/images/logo-part1.png" alt="">
+      <img src="../../../assets/images/logo-part2.png" alt="">
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="container">
+    <h1>المستمسكات</h1>
+    <div class="gridSystem">
+      <div class="box" (click)="selectImage()">
+        <img src="../../../assets/images/placeholder.png" alt="">
+      </div>
+      <div class="box" *ngFor="let img of imagesFromDevice;let i =index">
+        <img class="deleteBtn" src="../../../assets/delete_button.svg" alt="" (click)="deleteImage(img,i,'device')">
+        <img [src]="img.data" alt="">
+      </div>
+      <div class="box" *ngFor="let img of imagesToSubmit;let i =index">
+        <img class="deleteBtn" src="../../../assets/delete_button.svg" alt="" (click)="deleteImage(img,i,'submit')">
+        <img [src]="img" alt="">
+      </div>
+    </div>
+  </div>
+  <ion-footer mode="ios">
+    <ion-toolbar>
+      <ion-button expand="block" fill="clear" (click)="submit()">
+        حفظ </ion-button>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>

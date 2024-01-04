@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @Component({
   selector: 'app-about',
@@ -6,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./about.page.scss'],
 })
 export class AboutPage implements OnInit {
+  constructor(private iab: InAppBrowser) {}
 
-  constructor() { }
-
-  ngOnInit() {
+  ngOnInit() {}
+  async openLink(link) {
+    this.iab.create(link, '_system');
   }
-
 }

@@ -1,0 +1,69 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <img src="../../../assets/images/logo-part1.png" alt="">
+      <img src="../../../assets/images/logo-part2.png" alt="">
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button shape="round" (click)="nav('notification')">
+        <img src="../../../assets/images/icons8_notification 1.svg" alt="">
+      </ion-button>
+      <ion-button shape="round" (click)="nav('menu')">
+        <img src="../../../assets/images/icons8_male_user 1.svg" alt="">
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div class="container">
+    <h1>طلبات الاشتراك</h1>
+    <!--
+    <div class="searchBar">
+      <ion-searchbar mode="ios" placeholder="ابحث عن عميل"></ion-searchbar>
+    </div> -->
+
+    <div class="item_box" *ngFor="let client of clients">
+      <div class="start">
+        <p>{{client?.name}}</p>
+        <p>{{client?.createdAt|date:'dd/MM/yyyy'}} - <span>{{client?.phone}}</span> </p>
+      </div>
+      <div class="end">
+        <ion-button fill="clear" color="dark" shape="round" (click)="selectedClient = client;update(client._id,2)">
+          قبول
+        </ion-button>
+        <ion-button fill="clear" color="dark" shape="round" (click)="update(client._id,3)">
+          رفض
+        </ion-button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="loading" class="loading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+
+  <div *ngIf="emptyView" class="empty-view">
+    <div class="content">
+      <ion-icon name="happy-outline"></ion-icon>
+      <ion-text color="medium">
+        <p>لا يوجد بيانات حاليا</p>
+      </ion-text>
+    </div>
+  </div>
+
+  <div *ngIf="errorView" class="error-view">
+    <div class="content">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <ion-text color="medium">
+        <p>خطأ بالشبكة حاول مجددا</p>
+      </ion-text>
+    </div>
+  </div>
+  <ion-infinite-scroll threshold="25%" position="bottom" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

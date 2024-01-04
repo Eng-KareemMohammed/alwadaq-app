@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div class="container">
     <div class="myHeader">
       <div class="start">
@@ -23,24 +26,34 @@
   </div>
   <div class="line" *ngIf="authService.userData?.lastOrder">
     <p class="start">نوع الخزان</p>
-    <p class="end">بلاستيك</p>
+    <p class="end">{{authService.userData?.service_id?.name}}</p>
+  </div>
+  <div class="lastOrder line">
+    <div class="start">
+      <p>بداية الاشتراك</p>
+      <p>{{authService.userData?.lastOrder?.createdAt|date:'dd/MM/yyyy'}}</p>
+    </div>
+    <div class="end">
+      <p>تاريخ الانتهاء</p>
+      <p>{{authService.userData?.lastOrder?.reminder_date|date:'dd/MM/yyyy'}}</p>
+    </div>
   </div>
   <div class="container">
 
     <ion-button mode="ios" class="submit animate__animated animate__fadeIn duration" expand="block"
-      (click)="isModelOpen =true">
+      (click)="placeeOrder()">
       طلب التعبئة
     </ion-button>
 
-    <div class="item_box animate__animated animate__fadeIn duration">
+    <!-- <div class="item_box animate__animated animate__fadeIn duration" (click)="nav('papers')">
       <div class="image">
         <ion-img src="../../../assets/images/item1.svg"></ion-img>
       </div>
       <div class="name">
         عرض المستمسكات
       </div>
-    </div>
-    <div class="item_box animate__animated animate__fadeIn duration">
+    </div> -->
+    <div class="item_box animate__animated animate__fadeIn duration" (click)="nav('change-pass')">
       <div class="image">
         <ion-img src="../../../assets/images/item2.svg"></ion-img>
       </div>
@@ -48,7 +61,7 @@
         تغيير كلمة السر
       </div>
     </div>
-    <div class="item_box animate__animated animate__fadeIn duration">
+    <div class="item_box animate__animated animate__fadeIn duration" (click)="call()">
       <div class="image">
         <ion-img src="../../../assets/images/item3.svg"></ion-img>
       </div>
@@ -82,14 +95,15 @@
 
           </ion-item> -->
 
-          <div class="item_service_box" *ngFor="let service of services" (click)="selectedService = service._id">
+          <div class="item_service_box" [class.outline]="selectedService==service._id" *ngFor="let service of services"
+            (click)="selectedService = service._id">
             <div class="start">
               <p>{{service?.name}}</p>
-              <p>{{service?.alert_days}} يوم</p>
+              <!-- <p>{{service?.alert_days}} يوم</p> -->
             </div>
             <div class="end">
 
-              <p>{{service?.price |number}} دينار </p>
+              <p [hidden]="!service?.discount_amount">{{service?.price |number}} دينار </p>
               <p>{{service?.price - service?.discount_amount |number}} دينار </p>
             </div>
             <!-- <ion-checkbox [checked]="selectedService==service._id" slot="end"></ion-checkbox>

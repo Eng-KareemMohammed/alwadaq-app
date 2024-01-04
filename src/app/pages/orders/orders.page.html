@@ -6,8 +6,8 @@
     </ion-title>
 
     <ion-buttons slot="end">
-      <ion-button shape="round" (click)="logOut()">
-        <img src="../../../assets/images/logout.svg" alt="">
+      <ion-button shape="round" (click)="nav('menu')">
+        <img src="../../../assets/images/icons8_male_user 1.svg" alt="">
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -24,11 +24,11 @@
     <h1>طلبات التعبئة</h1>
   </div>
   <div class="line-segment animate__animated animate__zoomIn fast">
-    <div class="box ion-activatable ripple-parent " [class.active]="status==1" (click)="status=1;orders=[];getOrders()">
+    <div class="box ion-activatable ripple-parent " [class.active]="status==1" (click)="changeStatus(1)">
       <ion-ripple-effect></ion-ripple-effect>
       <p>جديد</p>
     </div>
-    <div class="box ion-activatable ripple-parent " [class.active]="status==2" (click)="status=2;orders=[];getOrders()">
+    <div class="box ion-activatable ripple-parent " [class.active]="status==2" (click)="changeStatus(2)">
       <ion-ripple-effect></ion-ripple-effect>
       <p>انتظار</p>
     </div>
@@ -38,7 +38,7 @@
       <p>قيد التوصيل</p>
     </div> -->
 
-    <div class="box ion-activatable ripple-parent " [class.active]="status==3" (click)="status=3;orders=[];getOrders()">
+    <div class="box ion-activatable ripple-parent " [class.active]="status==3" (click)="changeStatus(3)">
       <ion-ripple-effect></ion-ripple-effect>
       <p>منتهية</p>
     </div>
@@ -53,7 +53,7 @@
     <div class="item_box animate__animated animate__fadeIn" *ngFor="let order of orders;let i = index;trackBy:trackFn">
       <div class="start" (click)="details(order)">
         <p>طلب {{order?.service_id?.name}}</p>
-        <p>{{order.createdAt|date}} - <span>{{order?.client_id?.name}}</span> </p>
+        <p>{{order.createdAt|date:'dd/MM/yyyy'}} - <span>{{order?.client_id?.name}}</span> </p>
       </div>
       <div class="end">
         <ion-button *ngIf="order.status==1" fill="clear" color="dark" shape="round" (click)="accept(order)">
@@ -88,7 +88,7 @@
     </div>
   </div>
 
-  <ion-infinite-scroll threshold="10%" [disabled]="disable" position="bottom" (ionInfinite)="loadData($event)">
+  <ion-infinite-scroll threshold="10%" [disabled]="disableScroll" position="bottom" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

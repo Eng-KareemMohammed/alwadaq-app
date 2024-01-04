@@ -18,7 +18,7 @@ export class NewsPage implements OnInit {
   skip: number = 0;
 
   eventSubscription: Subscription;
-
+  disableScroll: boolean = false;
   constructor(
     private navCtrl: NavController,
     private dataService: DataService,
@@ -40,23 +40,39 @@ export class NewsPage implements OnInit {
   ionViewWillEnter() {}
 
   getNews(ev?: any) {
-    this.loading = true;
-    this.emptyView = false;
-    this.errorView = false;
     let url = `/news?skip=${this.skip}`;
     this.dataService.getData(url).subscribe(
       (res: any) => {
-        this.loading = false;
-        this.news = res;
-        if (this.news.length == 0) this.emptyView = true;
-        if (ev) ev.target.complete();
+        this.news = this.skip ? this.news.concat(res) : res;
+        if (this.skip > 0 && res.length < 20) this.disableScroll = true;
+        this.news.length ? this.showContentView(ev) : this.showEmptyView(ev);
       },
-      (e) => {
-        this.loading = false;
-        this.errorView = true;
-        if (ev) ev.target.complete();
+      (err) => {
+        this.showErrorView(err);
       }
     );
+  }
+
+  showContentView(ev?: any) {
+    this.loading = false;
+    this.errorView = false;
+    this.emptyView = false;
+    // this.disableInfinity = false;
+    if (ev) ev.target.complete();
+  }
+
+  showErrorView(ev?: any) {
+    this.loading = false;
+    this.errorView = true;
+    this.emptyView = false;
+    if (ev) ev.target.complete();
+  }
+
+  showEmptyView(ev?: any) {
+    this.loading = false;
+    this.errorView = false;
+    this.emptyView = true;
+    if (ev) ev.target.complete();
   }
   edit(news) {
     this.dataService.params.news = news;

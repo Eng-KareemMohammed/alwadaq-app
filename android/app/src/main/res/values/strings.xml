@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">alwadaq-app</string>
-    <string name="title_activity_main">alwadaq-app</string>
+    <string name="app_name">مياه الودق</string>
+    <string name="title_activity_main">مياه الودق</string>
     <string name="package_name">app.alwadaq.com</string>
     <string name="custom_url_scheme">app.alwadaq.com</string>
 </resources>

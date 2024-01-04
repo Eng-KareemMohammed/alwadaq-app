@@ -10,7 +10,7 @@
         <ion-skeleton-text animated style="width: 100%;height: 200px;"></ion-skeleton-text>
       </swiper-slide>
     </swiper-container>
-    <div class="lineCall">
+    <div class="lineCall" (click)="call()">
       <p>اتصل بنا فى حالة وجود مشكلة</p>
       <img src="../../../assets/images/call.svg" alt="">
     </div>
@@ -64,13 +64,22 @@
           </ion-input>
         </ion-item>
       </div>
+      <div class="item_box animate__animated animate__fadeIn duration ">
+        <div class="name">
+          <p>المنطقة</p>
+        </div>
+        <ion-item>
+          <ion-select formControlName="zone_id" mode="ios" multiple="false" placeholder="المنطقة" [compareWith]="zones">
+            <ion-select-option *ngFor="let zone of zones" [value]="zone?._id">{{zone?.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
       <div class="item_box  animate__animated animate__fadeInUp duration">
         <div class="name">
           <p>الموقع</p>
         </div>
         <ion-item (click)="getLocation()">
-          <!-- <ion-input  placeholder="">
-                        </ion-input> -->
+          <p>{{location?.lat |number}} - {{location?.lng |number}}</p>
           <ion-label slot="end" class="positioned-element">
             <img src="../../../assets/images/location.svg" alt="">
           </ion-label>

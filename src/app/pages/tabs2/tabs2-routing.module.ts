@@ -26,6 +26,11 @@ const routes: Routes = [
           import('../about/about.module').then((m) => m.AboutPageModule),
       },
       {
+        path: 'members',
+        loadChildren: () =>
+          import('../members/members.module').then((m) => m.MembersPageModule),
+      },
+      {
         path: 'news',
         loadChildren: () =>
           import('../news/news.module').then((m) => m.NewsPageModule),

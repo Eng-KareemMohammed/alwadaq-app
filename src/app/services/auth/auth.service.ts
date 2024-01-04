@@ -123,8 +123,8 @@ export class AuthService {
       }
     );
   }
-  updateUser(body: any) {
-    this.helper.showLoading();
+  async updateUser(body: any) {
+    // await this.helper.showLoading('جاري التحديث');
     this.dataService
       .editData(`/user/update/${this.userData?._id}`, body)
       .subscribe(
@@ -133,7 +133,7 @@ export class AuthService {
           await this.storage.set(REFRESH_TOKEN, user.refreshToken);
           localStorage.setItem(ACCESS_TOKEN, user.accessToken);
           this.helper.presentToast('تم تحديث البيانات بنجاح');
-          this.helper.dismissLoading();
+          await this.helper.dismissLoading();
           this.navCtrl.navigateForward('/tabs/home');
         },
         (err) => {
@@ -166,9 +166,9 @@ export class AuthService {
         this.userData = await this.storage.set(USER, res);
         // this.navCtrl.navigateRoot('/tabs/home');
         if (res.type == 1) {
-          await this.navCtrl.navigateRoot('/tabs');
+          await this.navCtrl.navigateRoot('/tabs/home');
         } else if (res.type == 2) {
-          await this.navCtrl.navigateRoot('/tabs2');
+          await this.navCtrl.navigateRoot('/tabs2/orders');
           await this.fcm.addLiesner();
         }
         return;

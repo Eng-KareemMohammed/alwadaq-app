@@ -67,8 +67,6 @@
           <p>الموقع</p>
         </div>
         <ion-item (click)="getLocation()">
-          <!-- <ion-input  placeholder="">
-                </ion-input> -->
           <p>{{location?.lat |number}} - {{location?.lng |number}}</p>
           <ion-label slot="end" class="positioned-element">
             <img src="../../../assets/images/location.svg" alt="">
@@ -101,6 +99,20 @@
         <ion-label slot="end" class="positioned-element" (click)="startScan()">
           <img src="../../../assets/images/Scaner.svg" alt="">
         </ion-label>
+      </div>
+      <h1 class="animate__animated animate__fadeIn">المستمسكات</h1>
+      <div class="gridSystem">
+        <div class="box" (click)="selectImage()">
+          <img src="../../../assets/images/placeholder.png" alt="">
+        </div>
+        <div class="box" *ngFor="let img of imagesFromDevice;let i =index">
+          <img class="deleteBtn" src="../../../assets/delete_button.svg" alt="" (click)="deleteImage(img,i,'device')">
+          <img [src]="img.data" alt="">
+        </div>
+        <div class="box" *ngFor="let img of imagesToSubmit;let i =index">
+          <img class="deleteBtn" src="../../../assets/delete_button.svg" alt="" (click)="deleteImage(img,i,'submit')">
+          <img [src]="img" alt="">
+        </div>
       </div>
     </form>
   </div>

@@ -1,12 +1,17 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.alwadaq.com',
-  appName: 'alwadaq-app',
+  appId: 'app.alwadaq2.com',
+  appName: 'مياه الودق',
   webDir: 'www',
   server: {
     cleartext: true,
     allowNavigation: ['*'],
+  },
+  plugins: {
+    PushNotifications: {
+      presentationOptions: ['badge', 'sound', 'alert'],
+    },
   },
 };
 

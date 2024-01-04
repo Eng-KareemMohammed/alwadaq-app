@@ -13,6 +13,8 @@ export class ServicesPage implements OnInit {
   errorView: boolean = false;
   services: any[] = [];
   skip: number = 0;
+  disableScroll: boolean = false;
+
   constructor(
     private navCtrl: NavController,
     private dataService: DataService
@@ -25,22 +27,41 @@ export class ServicesPage implements OnInit {
   ionViewWillEnter() {
     this.getServices();
   }
-  getServices() {
-    this.loading = true;
-    this.emptyView = false;
-    this.errorView = false;
+  getServices(ev?: any) {
     let url = `/services?skip=${this.skip}`;
     this.dataService.getData(url).subscribe(
       (res: any) => {
-        this.loading = false;
-        this.services = res;
-        if (this.services.length == 0) this.emptyView = true;
+        this.services = this.skip ? this.services.concat(res) : res;
+        if (this.skip > 0 && res.length < 20) this.disableScroll = true;
+        this.services.length
+          ? this.showContentView(ev)
+          : this.showEmptyView(ev);
       },
       (e) => {
-        this.loading = false;
-        this.errorView = true;
+        this.showEmptyView(e);
       }
     );
+  }
+  showContentView(ev?: any) {
+    this.loading = false;
+    this.errorView = false;
+    this.emptyView = false;
+    // this.disableInfinity = false;
+    if (ev) ev.target.complete();
+  }
+
+  showErrorView(ev?: any) {
+    this.loading = false;
+    this.errorView = true;
+    this.emptyView = false;
+    if (ev) ev.target.complete();
+  }
+
+  showEmptyView(ev?: any) {
+    this.loading = false;
+    this.errorView = false;
+    this.emptyView = true;
+    if (ev) ev.target.complete();
   }
   nav(route: string) {
     this.navCtrl.navigateForward(route);
@@ -55,5 +76,9 @@ export class ServicesPage implements OnInit {
     if (ev) {
       ev.target.complete();
     }
+  }
+  loadData(ev: any) {
+    this.skip += 1;
+    this.getServices(ev);
   }
 }

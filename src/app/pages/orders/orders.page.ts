@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Events } from 'src/app/enums/events';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { DataService } from 'src/app/services/data/data.service';
+import { FcmService } from 'src/app/services/fcm/fcm.service';
 import { HelpersService } from 'src/app/services/helpers/helpers.service';
 import { LocationService } from 'src/app/services/location/location.service';
 
@@ -20,15 +21,18 @@ export class OrdersPage implements OnInit {
   emptyView: boolean = false;
   errorView: boolean = false;
   active: boolean;
-  disable: boolean = false;
+  disableScroll: boolean = false;
   eventSubscription: Subscription;
 
   location: any;
+  interval: any;
+
   constructor(
     private navCtrl: NavController,
     private dataService: DataService,
     private helpers: HelpersService,
     private authService: AuthService,
+    private fcmService: FcmService,
     private locationService: LocationService
   ) {}
 
@@ -36,6 +40,12 @@ export class OrdersPage implements OnInit {
     this.location = await this.locationService.getCurrentLocation();
     this.active = this.authService.userData?.active;
     this.getOrders();
+
+    if (this.active) {
+      this.interval = setInterval(() => {
+        if (this.status == 1 && this.orders.length) this.fcmService.sound();
+      }, 10000);
+    }
     this.eventSubscription = this.helpers
       .onChangeEvent()
       .subscribe((eventName) => {
@@ -44,34 +54,50 @@ export class OrdersPage implements OnInit {
           this.getOrders();
         }
       });
+    console.log(this.interval);
   }
   ionViewWillEnter() {
     // this.active = this.authService.userData?.active;
     // console.log(this.authService.userData);
   }
-
+  changeStatus(status) {
+    this.status = status;
+    this.orders = [];
+    this.skip = 0;
+    this.getOrders();
+  }
   getOrders(ev?: any) {
-    this.loading = true;
-    this.emptyView = false;
-    this.errorView = false;
-
     this.dataService.getData(this.endPoint).subscribe(
       (res: any) => {
         this.orders = this.skip ? this.orders.concat(res) : res;
-        this.loading = false;
-        if (this.orders.length == 0) this.emptyView = true;
-        if (ev) ev.target.complete();
-        if (res.length == 0) {
-          if (ev) ev.target.disabled = true;
-          this.disable = true;
-        }
+        if (this.skip > 0 && res.length < 20) this.disableScroll = true;
+        this.orders.length ? this.showContentView(ev) : this.showEmptyView(ev);
       },
       (err) => {
-        this.loading = false;
-        this.errorView = true;
-        if (ev) ev.target.complete();
+        this.showErrorView(ev);
       }
     );
+  }
+  showContentView(ev?: any) {
+    this.loading = false;
+    this.errorView = false;
+    this.emptyView = false;
+    // this.disableInfinity = false;
+    if (ev) ev.target.complete();
+  }
+
+  showErrorView(ev?: any) {
+    this.loading = false;
+    this.errorView = true;
+    this.emptyView = false;
+    if (ev) ev.target.complete();
+  }
+
+  showEmptyView(ev?: any) {
+    this.loading = false;
+    this.errorView = false;
+    this.emptyView = true;
+    if (ev) ev.target.complete();
   }
   get endPoint(): string {
     let url = `/order`;
@@ -105,7 +131,6 @@ export class OrdersPage implements OnInit {
         total_delegate:
           (order.service_id.price - order.service_id.discount_amount) *
           order.service_id.delegate_commission,
-        zone_id: this.authService?.userData.zone_id,
       })
       .subscribe((res) => {
         this.helpers.presentToast('تم قبول الطلب');
@@ -135,7 +160,18 @@ export class OrdersPage implements OnInit {
       })
       .subscribe((res: any) => {
         console.log('change status', res);
-        this.authService.updateUserData(ev);
+        console.log('change status', ev);
+
+        this.authService.updateUserData(res);
+
+        if (res.active) {
+          this.interval = setInterval(() => {
+            if (this.status == 1 && this.orders.length) this.fcmService.sound();
+          }, 10000);
+        } else {
+          if (this.interval) clearInterval(this.interval);
+        }
+        console.log(this.interval);
       });
   }
   details(order) {
@@ -144,8 +180,9 @@ export class OrdersPage implements OnInit {
   }
   async finish(order) {
     let distance = getDistance(this.location, order.client_id.location);
-    let sameZone = order.zone_id._id == this.authService.userData.zone_id;
-    if (!sameZone || distance > 500)
+    // let sameZone = order.zone_id._id == this.authService.userData.zone_id._id;
+
+    if (distance > 500)
       return this.helpers.presentToast(
         'لا يمكنك انهاء الطلب لانك لست في نفس المنطقة'
       );

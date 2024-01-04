@@ -1,0 +1,94 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <img src="../../../assets/images/logo-part1.png" alt="">
+      <img src="../../../assets/images/logo-part2.png" alt="">
+    </ion-title>
+    <ion-buttons slot="end">
+
+      <ion-button shape="round" (click)="back()">
+        <!-- <img src="../../../assets/images/icons8_male_user 1.svg" alt=""> -->
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <div class="myHeader">
+      <div class="start">
+        <img src="../../../assets/images/icons8_male_user 1.svg" alt="">
+        <div class="content">
+          <p>{{authService?.userData?.name ?? '...'}}</p>
+          <p>{{authService?.userData?.phone}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="item_box animate__animated animate__fadeIn duration" (click)="nav('news')">
+      <div class="image">
+        <ion-img src="../../../assets/images/news_act.svg"></ion-img>
+      </div>
+      <div class="name">
+        الاخبار
+      </div>
+      <ion-icon name="chevron-back-outline"></ion-icon>
+
+    </div>
+
+    <!-- <div class="item_box animate__animated animate__fadeIn duration" (click)="nav('services')">
+      <div class="image">
+        <ion-img src="../../../assets/images/services_act.svg"></ion-img>
+      </div>
+      <div class="name">
+        الخدمات
+      </div>
+      <ion-icon name="chevron-back-outline"></ion-icon>
+
+    </div> -->
+    <!--
+    <div class="item_box animate__animated animate__fadeIn duration" (click)="nav('zones')">
+      <div class="image">
+        <ion-img src="../../../assets/images/reports_act.svg"></ion-img>
+      </div>
+      <div class="name">
+        المناطق
+      </div>
+      <ion-icon name="chevron-back-outline"></ion-icon>
+
+    </div> -->
+
+    <!-- <div class="item_box animate__animated animate__fadeIn duration" (click)="nav('ads')">
+      <div class="image">
+        <ion-img src="../../../assets/images/icons8_post_ads 1.svg"></ion-img>
+      </div>
+      <div class="name">
+        المساحة الاعلانية
+      </div>
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </div> -->
+
+    <div class="item_box animate__animated animate__fadeIn duration" (click)="nav('about')">
+      <div class="image">
+        <ion-img src="../../../assets/images/about_act.svg"></ion-img>
+      </div>
+      <div class="name">
+        من نحن
+      </div>
+      <ion-icon name="chevron-back-outline"></ion-icon>
+
+    </div>
+
+    <div class="item_box animate__animated animate__fadeIn duration" (click)="logOut()">
+      <div class="image">
+        <ion-img src="../../../assets/images/logout.svg"></ion-img>
+      </div>
+      <div class="name">
+        تسجيل خروج
+      </div>
+      <ion-icon name="chevron-back-outline"></ion-icon>
+
+    </div>
+  </div>
+</ion-content>

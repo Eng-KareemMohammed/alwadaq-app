@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { DataService } from 'src/app/services/data/data.service';
 import { HelpersService } from 'src/app/services/helpers/helpers.service';
 import { LocationService } from 'src/app/services/location/location.service';
 import Swiper from 'swiper';
+import { parsePhoneNumber } from 'libphonenumber-js';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +18,8 @@ export class RegisterPage implements OnInit {
   view: number = 1;
   form!: FormGroup;
   // loginFormTwo!: FormGroup;
+  zones: any[] = [];
+
   location: any;
   showPassword: boolean = false;
   @ViewChild('swiper')
@@ -29,13 +33,15 @@ export class RegisterPage implements OnInit {
     private dataService: DataService,
     private locationService: LocationService,
     private helpers: HelpersService,
-    private authService: AuthService
+    private authService: AuthService,
+    private iab: InAppBrowser
   ) {
     this.createForms();
   }
 
   ngOnInit() {
     this.getSliders();
+    this.getZones();
   }
   ionViewDidEnter() {
     // this.autoplay();
@@ -49,8 +55,15 @@ export class RegisterPage implements OnInit {
   createForms() {
     this.form = this.fb.group({
       name: [''],
-      phone: [''],
-      password: [''],
+      phone: ['', Validators.required],
+      zone_id: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+  }
+
+  getZones() {
+    this.dataService.getData(`/zone`).subscribe((res: any) => {
+      this.zones = res;
     });
   }
   segmentChanged(ev?: any) {
@@ -84,6 +97,8 @@ export class RegisterPage implements OnInit {
   async register() {
     if (!this.location)
       return this.helpers.presentToast('من فضلك قم بتحديد الموقع');
+    if (!this.validPhoneNumber(this.form.value.phone))
+      return this.helpers.presentToast('رقم الهاتف غير صحيح');
 
     if (this.form.invalid)
       return this.helpers.presentToast('من فضلك ادخل البيانات بشكل صحيح');
@@ -93,18 +108,11 @@ export class RegisterPage implements OnInit {
       location: this.location,
     };
     this.authService.register(body);
-    // this.dataService
-    //   .postData(`/user/register`,)
-    //   .subscribe(
-    //     (res: any) => {
-    //       this.helpers.dismissLoading();
-    //       this.helpers.presentToast('تمت العملية بنجاح');
-    //       // this.navCtrl.navigateBack('/pending');
-    //     },
-    //     (err) => {
-    //       this.helpers.dismissLoading();
-    //       this.helpers.presentToast(err.error.message);
-    //     }
-    //   );
+  }
+  validPhoneNumber(number: string) {
+    return parsePhoneNumber(number, `IQ`).isValid();
+  }
+  call() {
+    this.iab.create(`tel:07800880055`, '_system');
   }
 }

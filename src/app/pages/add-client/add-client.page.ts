@@ -2,10 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 import { Capacitor } from '@capacitor/core';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Events } from 'src/app/enums/events';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { CameraService } from 'src/app/services/camera/camera.service';
 import { DataService } from 'src/app/services/data/data.service';
 import { HelpersService } from 'src/app/services/helpers/helpers.service';
 import { LocationService } from 'src/app/services/location/location.service';
@@ -24,7 +25,8 @@ export class AddClientPage implements OnInit, OnDestroy {
   form: FormGroup;
   scanActive: boolean = false;
   subscripeScanner: Subscription;
-
+  imagesFromDevice: any[] = [];
+  imagesToSubmit: any[] = [];
   client: any = null;
   constructor(
     private navCtrl: NavController,
@@ -33,6 +35,8 @@ export class AddClientPage implements OnInit, OnDestroy {
     private locationService: LocationService,
     private mlScanner: MlkitScannerService,
     private authService: AuthService,
+    private cameraService: CameraService,
+    private alertCtrl: AlertController,
     private helpers: HelpersService
   ) {
     this.createForm();
@@ -56,6 +60,8 @@ export class AddClientPage implements OnInit, OnDestroy {
       delete this.client.password;
       this.location = this.client.location;
       this.form.patchValue(this.client);
+      this.imagesToSubmit = this.client.attachment;
+
       if (this.client.zone_id)
         this.form.patchValue({ zone_id: this.client.zone_id?._id });
       if (this.client.service_id)
@@ -86,13 +92,19 @@ export class AddClientPage implements OnInit, OnDestroy {
       this.register();
     }
   }
-  register() {
+  async register() {
+    let uploadedImages = this.imagesFromDevice.length
+      ? await this.cameraService.uploadImages(this.imagesFromDevice)
+      : [];
+    this.imagesToSubmit = this.imagesToSubmit.concat(uploadedImages);
+    let attachment = this.imagesToSubmit;
     let body = {
       ...this.form.value,
       type: 1,
       status: 2,
       location: this.location,
       zone_id: this.authService.userData.zone_id,
+      attachment,
     };
     this.dataService.postData(`/user/register`, body).subscribe(
       (res: any) => {
@@ -107,10 +119,16 @@ export class AddClientPage implements OnInit, OnDestroy {
       }
     );
   }
-  update() {
+  async update() {
+    let uploadedImages = this.imagesFromDevice.length
+      ? await this.cameraService.uploadImages(this.imagesFromDevice)
+      : [];
+    this.imagesToSubmit = this.imagesToSubmit.concat(uploadedImages);
+    let attachment = this.imagesToSubmit;
     let body = {
       ...this.form.value,
       location: this.location,
+      attachment,
     };
     if (!body.password) delete body.password;
     this.dataService
@@ -177,5 +195,35 @@ export class AddClientPage implements OnInit, OnDestroy {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     this.dataService.setParams({});
+  }
+
+  selectImage() {
+    this.cameraService.showActionSheet().then((val) => {
+      if (val) this.imagesFromDevice.push(val);
+    });
+  }
+
+  async deleteImage(img: any, index: number, type: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'حذف الصورة',
+      message: 'متأكد من حذف هذة الصورة',
+      mode: 'ios',
+      buttons: [
+        {
+          text: 'حذف',
+          handler: () => {
+            if (type == 'device') this.imagesFromDevice.splice(index, 1);
+            else if (type == 'submit') this.imagesToSubmit.splice(index, 1);
+          },
+          cssClass: 'danger',
+        },
+        {
+          text: 'الغاء',
+          role: 'cancel',
+          cssClass: 'dark',
+        },
+      ],
+    });
+    await alert.present();
   }
 }

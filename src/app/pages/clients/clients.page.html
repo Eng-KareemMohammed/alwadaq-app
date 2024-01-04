@@ -15,7 +15,8 @@
     <h1>قائمة العملاء</h1>
 
     <div class="searchBar">
-      <ion-searchbar mode="ios" placeholder="ابحث عن عميل"></ion-searchbar>
+      <ion-searchbar mode="ios" placeholder="ابحث عن عميل" [(ngModel)]="searchText"
+        (ionChange)="onSearchChange($event)"></ion-searchbar>
     </div>
 
     <div class="client_box" *ngFor="let client of clients">
@@ -25,6 +26,7 @@
           <p>{{client?.phone}}</p>
         </div>
         <div class="end">
+          <p *ngIf="!client?.alertStatus&&client?.alertStatus !=0 ">جديد</p>
           <p *ngIf="client?.alertStatus==1">سينتهي</p>
           <p *ngIf="client?.alertStatus==0" style="background: var(--ion-color-danger);">منتهي</p>
           <p *ngIf="client?.alertStatus==2" style="background: var(--ion-color-success);color: #fff;">فعال</p>
@@ -59,9 +61,9 @@
     <ng-template>
       <ion-content class="ion-padding text-center">
         <!-- <ion-list> -->
-        <ion-item button (click)="edit()" detail="false">
+        <!-- <ion-item button (click)="edit()" detail="false">
           <ion-label>تعديل</ion-label>
-        </ion-item>
+        </ion-item> -->
         <ion-item button (click)="addOrder()" detail="false">
           <ion-label>اضافة تعبئة</ion-label>
         </ion-item>
@@ -101,14 +103,15 @@
 
             </ion-item> -->
 
-          <div class="item_service_box" *ngFor="let service of services" (click)="selectedService = service._id">
+          <div class="item_service_box" [class.outline]="selectedService==service._id" *ngFor="let service of services"
+            (click)="selectedService = service._id">
             <div class="start">
               <p>{{service?.name}}</p>
               <p>{{service?.alert_days}} يوم</p>
             </div>
             <div class="end">
 
-              <p>{{service?.price |number}} دينار </p>
+              <p *ngIf="service?.discount_amount" class="discount">{{service?.price |number}} دينار </p>
               <p>{{service?.price - service?.discount_amount |number}} دينار </p>
             </div>
             <!-- <ion-checkbox [checked]="selectedService==service._id" slot="end"></ion-checkbox>

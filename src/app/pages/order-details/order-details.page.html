@@ -43,7 +43,12 @@
       </div>
       <p class="end">
         {{order?.client_id?.phone}}
+        <ion-button size="small" mode="ios" fill="outline" (click)="call(order?.client_id?.phone)">
+          call
+          <ion-icon slot="end" name="call-outline"></ion-icon>
+        </ion-button>
       </p>
+
     </div>
     <div class="item_box">
       <div class="start">
@@ -52,7 +57,7 @@
         </p>
       </div>
       <p class="end">
-        {{order?.createdAt|date}}
+        {{order?.createdAt|date:'dd/MM/yyyy'}}
       </p>
     </div>
     <div class="item_box">
@@ -75,7 +80,7 @@
         {{order?.service_id?.price - order?.service_id?.discount_amount |number}}
       </p>
     </div>
-    <div class="item_box">
+    <!-- <div class="item_box">
       <div class="start">
         <p>
           عمولة المندوب
@@ -84,7 +89,7 @@
       <p class="end">
         {{order?.service_id?.delegate_commission |number}} %
       </p>
-    </div>
+    </div> -->
     <div class="item_box">
       <div class="start">
         <p>

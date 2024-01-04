@@ -24,6 +24,7 @@ export class ClientsPage implements OnInit {
   services: any[] = [];
   selectedClient: any = null;
   eventSubscription: Subscription;
+  disableScroll: boolean = false;
 
   constructor(
     private navCtrl: NavController,
@@ -48,23 +49,20 @@ export class ClientsPage implements OnInit {
     // this.getClients();
   }
   getClients(ev?: any) {
-    this.loading = true;
-    this.emptyView = false;
-    this.errorView = false;
-
     this.dataService.getData(this.endPoint).subscribe(
       (res: any) => {
         this.clients = this.skip ? this.clients.concat(res) : res;
-        this.loading = false;
-        if (this.clients.length == 0) this.emptyView = true;
-        if (ev) ev.target.complete();
+        if (this.skip > 0 && res.length < 20) this.disableScroll = true;
+        this.clients.length ? this.showContentView(ev) : this.showEmptyView(ev);
       },
       (err) => {
-        this.loading = false;
-        this.errorView = true;
-        if (ev) ev.target.complete();
+        this.showErrorView(err);
       }
     );
+  }
+
+  onSearchChange(ev: any) {
+    this.getClients();
   }
   get endPoint(): string {
     let url = `/user/all?type=1&status=2`;
@@ -73,7 +71,27 @@ export class ClientsPage implements OnInit {
     // if (this.selectedZone) url += `&zone_id=${this.selectedZone}`;
     return url;
   }
+  showContentView(ev?: any) {
+    this.loading = false;
+    this.errorView = false;
+    this.emptyView = false;
+    // this.disableInfinity = false;
+    if (ev) ev.target.complete();
+  }
 
+  showErrorView(ev?: any) {
+    this.loading = false;
+    this.errorView = true;
+    this.emptyView = false;
+    if (ev) ev.target.complete();
+  }
+
+  showEmptyView(ev?: any) {
+    this.loading = false;
+    this.errorView = false;
+    this.emptyView = true;
+    if (ev) ev.target.complete();
+  }
   doRefresh(ev?: any) {
     this.skip = 0;
     this.getClients(ev);
@@ -102,6 +120,9 @@ export class ClientsPage implements OnInit {
   }
 
   confirmOrder() {
+    if (!this.selectedService)
+      return this.helpers.presentToast('من فضلك اختر الخدمة المطلوبة');
+
     if (this.selectedService) {
       console.log(this.selectedService);
       this.dataService

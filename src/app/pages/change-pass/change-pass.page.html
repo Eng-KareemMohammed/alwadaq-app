@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-forward-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      تغيير كلمة المرور
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <div class="item_box  animate__animated animate__fadeIn duration">
+      <div class="name">
+        <p>كلمة المرور الجديدة </p>
+      </div>
+      <ion-item>
+        <ion-button slot="end" (click)="showPassword = !showPassword" fill="clear">
+          <ion-icon [name]="showPassword ? 'eye-off-outline' :'eye-outline' ">
+          </ion-icon>
+        </ion-button>
+        <ion-input placeholder="ادخل كلمة المرور..." [(ngModel)]="password" [type]="showPassword ?'text' :'password'">
+        </ion-input>
+      </ion-item>
+    </div>
+
+    <div class="item_box  animate__animated animate__fadeIn duration">
+      <div class="name">
+        <p>تأكيد كلمة المرور </p>
+      </div>
+      <ion-item>
+        <ion-button slot="end" (click)="showPassword = !showPassword" fill="clear">
+          <ion-icon [name]="showPassword ? 'eye-off-outline' :'eye-outline' ">
+          </ion-icon>
+        </ion-button>
+        <ion-input placeholder="ادخل كلمة المرور..." [(ngModel)]="confirmPassword"
+          [type]="showPassword ?'text' :'password'">
+        </ion-input>
+      </ion-item>
+    </div>
+  </div>
+  <ion-footer mode="ios">
+    <ion-toolbar>
+      <ion-button expand="block" fill="clear" (click)="submit()">
+        حفظ </ion-button>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>

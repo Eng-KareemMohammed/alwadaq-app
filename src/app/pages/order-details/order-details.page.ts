@@ -40,4 +40,8 @@ export class OrderDetailsPage implements OnInit {
     // });
     this.iab.create(url, '_system');
   }
+
+  call(number: any) {
+    this.iab.create(`tel:${number}`, '_system');
+  }
 }

@@ -25,6 +25,11 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'menu',
+    loadChildren: () =>
+      import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
+  },
+  {
     path: 'home',
     loadChildren: () =>
       import('./pages/home/home.module').then((m) => m.HomePageModule),
@@ -94,7 +99,22 @@ const routes: Routes = [
   },
   {
     path: 'order-details',
-    loadChildren: () => import('./pages/order-details/order-details.module').then( m => m.OrderDetailsPageModule)
+    loadChildren: () =>
+      import('./pages/order-details/order-details.module').then(
+        (m) => m.OrderDetailsPageModule
+      ),
+  },
+  {
+    path: 'papers',
+    loadChildren: () =>
+      import('./pages/papers/papers.module').then((m) => m.PapersPageModule),
+  },
+  {
+    path: 'change-pass',
+    loadChildren: () =>
+      import('./pages/change-pass/change-pass.module').then(
+        (m) => m.ChangePassPageModule
+      ),
   },
 ];
 

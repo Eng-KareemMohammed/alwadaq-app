@@ -1,26 +1,33 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-forward-outline"></ion-back-button>
+    </ion-buttons>
     <ion-title>
-      <img src="../../../assets/images/logo-part1.png" alt="">
-      <img src="../../../assets/images/logo-part2.png" alt="">
+      من نحن
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
   <div class="container">
     <h1>نبذه عنا</h1>
-
+    <p>
+      شركة الودق لتصفية وتحلية مياه الشرب باحدث طرق التنقية وضمن مواصفات الصحة العالمية
+      تقوم الشركة بتوزيع خزانات سل ستيل وبلاستك حسب الطلب إلى المنازل والمحال التجارية مجاناً على سبيل الاعارة ( امانة )
+      خدمة التوصيل مجاناً بواسطة خزانات سل ستيل صحي غذائي 100‎%
+      ويتم اعادة إملائها من الشركة حصراً
+    </p>
     <div class="gridSystem">
-      <div class="box">
+      <div class="box" (click)="openLink('https://www.facebook.com/lcciraq?mibextid=LQQJ4d')">
         <img src="../../../assets/images/logo-facebook 1.svg" alt="">
       </div>
-      <div class="box">
+      <div class="box" (click)="openLink('https://wa.me/+9647700260060')">
         <img src="../../../assets/images/logo-whatsapp 1.svg" alt="">
 
-
       </div>
-      <div class="box">
+      <div class="box" (click)="openLink('https://www.tiktok.com/@alwadq_water?_t=8iTPL3zZCys&_r=1')">
         <img src="../../../assets/images/logo-youtube 1.svg" alt="">
 
       </div>
