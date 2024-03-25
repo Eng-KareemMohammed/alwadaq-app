@@ -41,11 +41,12 @@ export class OrdersPage implements OnInit {
     this.active = this.authService.userData?.active;
     this.getOrders();
 
-    if (this.active) {
-      this.interval = setInterval(() => {
-        if (this.status == 1 && this.orders.length) this.fcmService.sound();
-      }, 10000);
-    }
+    // if (this.active) {
+    //   this.interval = setInterval(() => {
+    //     if (this.status == 1 && this.orders.length) this.fcmService.sound();
+    //   }, 10000);
+    // }
+    this.playSound();
     this.eventSubscription = this.helpers
       .onChangeEvent()
       .subscribe((eventName) => {
@@ -55,6 +56,23 @@ export class OrdersPage implements OnInit {
         }
       });
     console.log(this.interval);
+  }
+  playSound() {
+    if (this.active) {
+      let counter = 0; // Initialize a counter variable
+
+      this.interval = setInterval(() => {
+        if (this.status == 1 && this.orders.length) {
+          this.fcmService.sound();
+
+          counter++; // Increment the counter after playing the sound
+
+          if (counter === 3) {
+            clearInterval(this.interval); // Clear the interval after playing 3 times
+          }
+        }
+      }, 10000);
+    }
   }
   ionViewWillEnter() {
     // this.active = this.authService.userData?.active;
@@ -159,11 +177,7 @@ export class OrdersPage implements OnInit {
         active: ev,
       })
       .subscribe((res: any) => {
-        console.log('change status', res);
-        console.log('change status', ev);
-
         this.authService.updateUserData(res);
-
         if (res.active) {
           this.interval = setInterval(() => {
             if (this.status == 1 && this.orders.length) this.fcmService.sound();

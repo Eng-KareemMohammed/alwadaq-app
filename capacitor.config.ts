@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.alwadaq2.com',
+  appId: 'app.alwadaq.user.com',
   appName: 'مياه الودق',
   webDir: 'www',
   server: {

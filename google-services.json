@@ -7,9 +7,66 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:355378209511:android:a98f047c1ee203f29ab842",
+        "android_client_info": {
+          "package_name": "app.alwadaq.admin.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3f1IWjlgQ3FbTIbrhgpQsT8JOEkV791A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:355378209511:android:6930c895423d63119ab842",
         "android_client_info": {
           "package_name": "app.alwadaq.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3f1IWjlgQ3FbTIbrhgpQsT8JOEkV791A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355378209511:android:8f43b63d46edde439ab842",
+        "android_client_info": {
+          "package_name": "app.alwadaq.user.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3f1IWjlgQ3FbTIbrhgpQsT8JOEkV791A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355378209511:android:3dd4cdefaa39853e9ab842",
+        "android_client_info": {
+          "package_name": "com.workaa.mdsoft"
         }
       },
       "oauth_client": [],

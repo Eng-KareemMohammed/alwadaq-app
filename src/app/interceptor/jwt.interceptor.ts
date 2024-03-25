@@ -20,7 +20,7 @@ export class JwtInterceptor implements HttpInterceptor {
   constructor(
     private authService: AuthService,
     private navCtrl: NavController
-  ) { }
+  ) {}
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -61,7 +61,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
   handle406Error() {
     this.authService.removeCredentials();
-    this.navCtrl.navigateForward('/login');
+    this.navCtrl.navigateRoot('/login');
     return EMPTY;
   }
 

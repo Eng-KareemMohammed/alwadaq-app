@@ -1,0 +1,2 @@
+alias : alwadaq-user
+pass : 192001

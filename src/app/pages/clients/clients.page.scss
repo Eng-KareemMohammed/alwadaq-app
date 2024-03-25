@@ -11,6 +11,9 @@ ion-header {
   margin: auto;
   max-width: 720px;
 }
+.container:last-of-type {
+  padding-bottom: 100px;
+}
 h1 {
   font-size: 20px;
   font-family: "bold";
@@ -63,6 +66,43 @@ ion-searchbar {
   }
 }
 
+.line-segment {
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  align-items: center;
+  gap: 8px;
+  margin-block: 16px 0px;
+  background: #f3f3f3;
+  padding: 10px 20px;
+  .box {
+    position: relative;
+    //   overflow: hidden;
+
+    user-select: none;
+    border: 1px solid var(--ion-color-light);
+    padding: 8px 10px;
+    flex-basis: 35%;
+    // background: rgba(78, 78, 97, 0.2);
+    border-radius: 24px;
+
+    p {
+      font-size: 15px;
+      margin: 0;
+      color: #808a98;
+    }
+    ion-ripple-effect {
+      border-radius: 24px;
+    }
+  }
+  .box.active {
+    background: linear-gradient(87deg, #b7d712 1.17%, #3e7903 96.11%);
+    transition: all ease-in-out 0.3s;
+    p {
+      color: #fff;
+    }
+  }
+}
 .client_box:last-of-type {
   margin-bottom: 50px;
 }
@@ -190,4 +230,20 @@ ion-modal {
 }
 .mark {
   color: #3e7903;
+}
+.zoom-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.zoom-container img {
+  transition: transform 0.3s ease;
+}
+
+.zoom-container.zoomed img {
+  cursor: zoom-out;
+}
+.facade {
+  --width: 100%;
+  --height: 60%;
 }

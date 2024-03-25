@@ -18,8 +18,35 @@
       <ion-searchbar mode="ios" placeholder="ابحث عن عميل" [(ngModel)]="searchText"
         (ionChange)="onSearchChange($event)"></ion-searchbar>
     </div>
+  </div>
+  <div class="line-segment animate__animated animate__fadeIn fast">
+    <div class="box ion-activatable ripple-parent " [class.active]="alertStatus==null"
+      (click)="status=2;changeStatus(null)">
+      <ion-ripple-effect></ion-ripple-effect>
+      <p>الكل</p>
+    </div>
+    <div class="box ion-activatable ripple-parent " [class.active]="alertStatus==0" (click)="status=2;changeStatus(0)">
+      <ion-ripple-effect></ion-ripple-effect>
+      <p>منتهي</p>
+    </div>
 
-    <div class="client_box" *ngFor="let client of clients">
+    <div class="box ion-activatable ripple-parent " [class.active]="alertStatus==1" (click)="status=2;changeStatus(1)">
+      <ion-ripple-effect></ion-ripple-effect>
+      <p>سينتهي</p>
+    </div>
+    <div class="box ion-activatable ripple-parent " [class.active]="alertStatus==2" (click)="status=2;changeStatus(2)">
+      <ion-ripple-effect></ion-ripple-effect>
+      <p>فعال</p>
+    </div>
+
+    <!-- <div class="box ion-activatable ripple-parent " [class.active]="status==3"
+      (click)="alertStatus=null; status=3;disActiveAcc()">
+      <ion-ripple-effect></ion-ripple-effect>
+      <p>معطل</p>
+    </div> -->
+  </div>
+  <div class="container">
+    <div class="client_box" *ngFor="let client of filteredClients">
       <div class="topLine">
         <div class="start">
           <p>{{client?.name}}</p>
@@ -61,16 +88,21 @@
     <ng-template>
       <ion-content class="ion-padding text-center">
         <!-- <ion-list> -->
-        <!-- <ion-item button (click)="edit()" detail="false">
+        <ion-item button (click)="edit()" detail="false">
           <ion-label>تعديل</ion-label>
-        </ion-item> -->
+        </ion-item>
         <ion-item button (click)="addOrder()" detail="false">
           <ion-label>اضافة تعبئة</ion-label>
         </ion-item>
-        <!-- <ion-item button >
-            <ion-label>عرض الموقع</ion-label>
-          </ion-item> -->
-        <!-- </ion-list> -->
+        <ion-item button (click)="viewHouseFacade()" detail="false">
+          <ion-label>عرض واجهة المنزل</ion-label>
+        </ion-item>
+        <ion-item button detail="false" (click)="call()">
+          <ion-label>اتصال</ion-label>
+        </ion-item>
+        <ion-item button detail="false" (click)="openMap()">
+          <ion-label>عرض الموقع</ion-label>
+        </ion-item>
       </ion-content>
     </ng-template>
   </ion-popover>
@@ -81,10 +113,10 @@
       عميل
     </ion-fab-button>
   </ion-fab>
-  <ion-infinite-scroll threshold="25%" position="bottom" (ionInfinite)="loadData($event)">
+  <!-- <ion-infinite-scroll threshold="25%" position="bottom" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  </ion-infinite-scroll> -->
 
   <ion-modal [isOpen]="isModelOpen" (ionModalDidDismiss)="isModelOpen=false">
     <ng-template>
@@ -92,7 +124,7 @@
         <ion-toolbar>
           <ion-title>اختر الخدمة</ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="isModelOpen= false">الغاء</ion-button>
+            <ion-button (click)="isModelOpen= false;selectedService=null">الغاء</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -124,6 +156,23 @@
           </div>
           <ion-button expand="block" class="ion-margin" mode="ios" (click)="confirmOrder()">تأكيد</ion-button>
         </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  <ion-modal [isOpen]="isModalHouseFacadeOpen " class="facade" (ionModalDidDismiss)="isModalHouseFacadeOpen=false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>واجهة المنزل</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="isModalHouseFacadeOpen= false">الغاء</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding" (click)="handleZoom($event)">
+        <div class="zoom-container" [ngClass]="{ 'zoomed': zoomed }">
+          <img #zoomImage [src]="selectedClient?.houseFacade" alt="">
+        </div>
       </ion-content>
     </ng-template>
   </ion-modal>

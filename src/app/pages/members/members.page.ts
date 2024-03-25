@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { IonPopover, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Events } from 'src/app/enums/events';
 import { DataService } from 'src/app/services/data/data.service';
 import { HelpersService } from 'src/app/services/helpers/helpers.service';
+import { LocationService } from 'src/app/services/location/location.service';
 
 @Component({
   selector: 'app-members',
@@ -19,11 +21,14 @@ export class MembersPage implements OnInit {
   errorView: boolean = false;
   disableScroll: boolean = false;
   selectedClient: any = null;
-
+  @ViewChild('popover') popover: IonPopover;
+  isOpen: boolean = false;
   eventSubscription: Subscription;
   constructor(
     private navCtrl: NavController,
     private helpers: HelpersService,
+    private locationService: LocationService,
+    private iab: InAppBrowser,
     private dataService: DataService
   ) {}
 
@@ -65,7 +70,7 @@ export class MembersPage implements OnInit {
 
   update(id, status) {
     if (status == 2) {
-      if (this.selectedClient.attachment.length < 3)
+      if (this.selectedClient.attachment.length < 2)
         return this.helpers.presentToast('يجب اضافة البيانات اولا');
     }
     this.dataService
@@ -73,10 +78,17 @@ export class MembersPage implements OnInit {
       .subscribe((res: any) => {
         console.log(res);
         if (status == 2) {
+          this.helpers.presentToast('تم قبول العميل');
           this.addOrder(res);
         }
         this.getClients();
       });
+  }
+
+  edit() {
+    this.dataService.setParams({ client: this.selectedClient });
+    this.popover.dismiss();
+    this.navCtrl.navigateForward('/add-client');
   }
   addOrder(res) {
     this.dataService
@@ -119,5 +131,29 @@ export class MembersPage implements OnInit {
   loadData(ev: any) {
     this.skip += 1;
     this.getClients(ev);
+  }
+  presentPopover(e: Event, client: any) {
+    this.popover.event = e;
+    this.isOpen = true;
+    this.selectedClient = client;
+  }
+  call() {
+    this.iab.create(`tel:${this.selectedClient.phone}`, '_system');
+  }
+  async openMap() {
+    let location = this.selectedClient.location;
+    // let currentLocation = await this.locationService.getCurrentLocation();
+    if (!location || location == undefined)
+      return this.helpers.presentToast('لا يوجد موقع للعميل');
+    let currentLocation = await this.locationService.getCurrentLocation();
+    console.log(location, 'location');
+    console.log(currentLocation, 'currentLocation');
+
+    const url = `https://www.google.com/maps/dir/${currentLocation.lat},${currentLocation.lng}/${location.lat},${location.lng}`;
+
+    // await Browser.open({
+    //   url: `https://www.google.com/maps/dir/${currentLocation.lat},${currentLocation.lng}/${location[1]},${location[0]}`,
+    // });
+    this.iab.create(url, '_system');
   }
 }

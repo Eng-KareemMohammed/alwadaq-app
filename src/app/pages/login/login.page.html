@@ -11,7 +11,7 @@
       <img src="../../../assets/images/slide.png" alt="">
     </div> -->
     <swiper-container #swiper (afterinit)="swiperReady()" [slidesPerView]="1" [spaceBetween]="10" [autoplay]="true"
-      (slidechange)="swiperSlideChange($event)" [loop]="sliders.length>1 ? true :false" direction="horizontal"
+      (slidechange)="swiperSlideChange($event)" [loop]="true" direction="horizontal"
       [pagination]="{clickable:true,dynamicBullets:true}">
       <swiper-slide *ngFor="let slid of sliders">
         <img [src]="slid?.image" alt="">

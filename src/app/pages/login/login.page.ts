@@ -32,14 +32,20 @@ export class LoginPage implements OnInit {
     private iab: InAppBrowser
   ) {
     this.createForms();
-  }
-  ngOnInit() {
     this.getSliders();
+  }
+  ngOnInit() {}
+  ionViewWillEnter() {
+    this.swiper = this.swiperRef?.nativeElement.swiper;
   }
   getSliders() {
     this.dataService.getData('/slider').subscribe((res: any) => {
       this.sliders = res;
-      if (this.sliders.length > 1) this.autoplay();
+      setTimeout(() => {
+        this.swiper.update();
+        this.autoplay();
+      }, 1000);
+      // console.log(this.sliders);
     });
   }
   createForms() {

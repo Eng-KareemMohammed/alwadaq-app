@@ -30,8 +30,10 @@ export class AuthService {
     return localStorage.getItem(ACCESS_TOKEN);
   }
 
-  removeCredentials() {
+  async removeCredentials() {
     localStorage.removeItem(ACCESS_TOKEN);
+    await this.fcm.unsubscribeAll();
+    await this.fcm.unsubscribeOne();
     // this.storage.remove('taboor_url');
     this.userData = null;
     return Promise.all([
@@ -60,32 +62,33 @@ export class AuthService {
     delete body.rememberMe;
     this.dataService.postData('/user/login', body).subscribe(
       async (user: any) => {
-        this.userData = await this.storage.set(USER, user);
-        // if (rememberMe)
-        this.fcm.user = user;
-        await this.storage.set(REFRESH_TOKEN, user.refreshToken);
-        localStorage.setItem(ACCESS_TOKEN, user.accessToken);
-        this.helper.dismissLoading();
-
-        // else this.fcm.notificationsOne();
-        // if (user.status == 'pending') {
-        //   this.navCtrl.navigateRoot('/pending');
-        // } else {
-        // this.navCtrl.navigateRoot('/tabs');
-        // }
-        if (user.status == 2) {
+        if (user.status == 3) {
+          //  this.logOut();
+          // this.navCtrl.navigateRoot('/login');
+          this.helper.presentToast(
+            'هذا الحساب معطل حالياً لا يمكن تسجيل الدخول',
+            'danger'
+          );
+        } else {
           this.userData = await this.storage.set(USER, user);
-          // this.navCtrl.navigateRoot('/tabs/home');
-          if (user.type == 1) {
-            await this.navCtrl.navigateRoot('/tabs');
-          } else if (user.type == 2) {
-            await this.fcm.notificationsOne();
-            await this.navCtrl.navigateRoot('/tabs2');
+          // if (rememberMe)
+          this.fcm.user = user;
+          await this.storage.set(REFRESH_TOKEN, user.refreshToken);
+          localStorage.setItem(ACCESS_TOKEN, user.accessToken);
+          await this.fcm.notificationsOne();
+
+          if (user.status == 2) {
+            // this.navCtrl.navigateRoot('/tabs/home');
+            if (user.type == 1) {
+              await this.navCtrl.navigateRoot('/tabs');
+            } else if (user.type == 2) {
+              await this.navCtrl.navigateRoot('/tabs2');
+            }
+          } else if (user.status == 1) {
+            this.navCtrl.navigateRoot('/pending');
           }
-          return;
-        } else if (user.status == 1) {
-          this.navCtrl.navigateRoot('/pending');
         }
+        this.helper.dismissLoading();
       },
       (err) => {
         this.helper.dismissLoading();
@@ -155,29 +158,41 @@ export class AuthService {
 
     await this.removeCredentials();
     // await this.fcm.unsubscribeAll()
-    this.helper.dismissLoading();
+    await this.helper.dismissLoading();
     this.navCtrl.navigateRoot('/login');
   }
   userStatus() {
-    this.dataService.getData(`/user/status`).subscribe(async (res: any) => {
-      console.log(res);
+    this.dataService.getData(`/user/status`).subscribe(
+      async (res: any) => {
+        console.log(res);
+        if (!res) return this.logOut();
+        if (res.status == 2) {
+          this.userData = await this.storage.set(USER, res);
+          // this.navCtrl.navigateRoot('/tabs/home');
+          if (res.type == 1) {
+            await this.navCtrl.navigateRoot('/tabs/home');
+          } else if (res.type == 2) {
+            await this.navCtrl.navigateRoot('/tabs2/orders');
+            // await this.fcm.addLiesner();
+          }
+          await this.fcm.notificationsOne();
 
-      if (res.status == 2) {
-        this.userData = await this.storage.set(USER, res);
-        // this.navCtrl.navigateRoot('/tabs/home');
-        if (res.type == 1) {
-          await this.navCtrl.navigateRoot('/tabs/home');
-        } else if (res.type == 2) {
-          await this.navCtrl.navigateRoot('/tabs2/orders');
-          await this.fcm.addLiesner();
+          return;
+        } else if (res.status == 1) {
+          this.navCtrl.navigateRoot('/pending');
+          await this.fcm.notificationsOne();
+        } else if (res.status == 3) {
+          this.logOut();
+          // this.navCtrl.navigateRoot('/login');
         }
-        return;
-      } else if (res.status == 1) {
-        this.navCtrl.navigateRoot('/pending');
+        // this.helper.presentToast(res.message);
+        // this.logOut();
+      },
+      (err) => {
+        this.removeCredentials();
+        this.navCtrl.navigateRoot('/login');
       }
-      // this.helper.presentToast(res.message);
-      // this.logOut();
-    });
+    );
   }
   changePassword(body: any) {
     this.helper.showLoading();

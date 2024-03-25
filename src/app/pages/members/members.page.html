@@ -5,9 +5,9 @@
       <img src="../../../assets/images/logo-part2.png" alt="">
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button shape="round" (click)="nav('notification')">
+      <!-- <ion-button shape="round" (click)="nav('notification')">
         <img src="../../../assets/images/icons8_notification 1.svg" alt="">
-      </ion-button>
+      </ion-button> -->
       <ion-button shape="round" (click)="nav('menu')">
         <img src="../../../assets/images/icons8_male_user 1.svg" alt="">
       </ion-button>
@@ -35,9 +35,11 @@
         <ion-button fill="clear" color="dark" shape="round" (click)="selectedClient = client;update(client._id,2)">
           قبول
         </ion-button>
-        <ion-button fill="clear" color="dark" shape="round" (click)="update(client._id,3)">
+        <!-- <ion-button fill="clear" color="dark" shape="round" (click)="update(client._id,3)">
           رفض
-        </ion-button>
+        </ion-button> -->
+        <img (click)="presentPopover($event,client)" src="../../../assets/images/options.svg" alt="">
+
       </div>
     </div>
   </div>
@@ -66,4 +68,31 @@
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
+  <ion-popover mode="ios" [isOpen]="isOpen" (didDismiss)="isOpen = false" #popover size="auto">
+    <ng-template>
+      <ion-content class="ion-padding text-center">
+        <!-- <ion-list> -->
+        <!-- <ion-item button (click)="details()" detail="false">
+          <ion-label>عرض البيانات</ion-label>
+        </ion-item>
+      -->
+
+        <ion-item button (click)="edit()" detail="false">
+          <ion-label>اضافة البيانات</ion-label>
+        </ion-item>
+
+        <ion-item button detail="false" (click)="update(selectedClient._id,3)">
+          <ion-label>رفض</ion-label>
+        </ion-item>
+
+        <ion-item button detail="false" (click)="call()">
+          <ion-label>اتصال</ion-label>
+        </ion-item>
+        <ion-item button detail="false" (click)="openMap()">
+          <ion-label>عرض الموقع</ion-label>
+        </ion-item>
+        <!-- </ion-list> -->
+      </ion-content>
+    </ng-template>
+  </ion-popover>
 </ion-content>

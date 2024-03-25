@@ -7,6 +7,7 @@ import { Capacitor } from '@capacitor/core';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { register } from 'swiper/element/bundle';
 import { MlkitScannerService } from './services/mlkit-scanner/mlkit-scanner.service';
+import { FcmService } from './services/fcm/fcm.service';
 register();
 
 @Component({
@@ -20,7 +21,8 @@ export class AppComponent {
     private platform: Platform,
     private navCtrl: NavController,
     private mlkitScannerService: MlkitScannerService,
-    private authService: AuthService
+    private authService: AuthService,
+    private fcmService: FcmService
   ) {
     this.initApp();
   }
@@ -33,7 +35,7 @@ export class AppComponent {
       await SplashScreen.show({ autoHide: false });
     await this.storage.create();
     await this.checkUser();
-    // await this.fcmService.initPush();
+    await this.fcmService.initPush();
 
     if (
       Capacitor.getPlatform() !== 'web' &&

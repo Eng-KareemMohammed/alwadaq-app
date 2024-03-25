@@ -43,13 +43,17 @@ export class RegisterPage implements OnInit {
     this.getSliders();
     this.getZones();
   }
-  ionViewDidEnter() {
-    // this.autoplay();
+  ionViewWillEnter() {
+    this.swiper = this.swiperRef?.nativeElement.swiper;
   }
   getSliders() {
     this.dataService.getData('/slider').subscribe((res: any) => {
       this.sliders = res;
-      if (this.sliders.length > 1) this.autoplay();
+      if (this.sliders.length > 1)
+        setTimeout(() => {
+          this.swiper.update();
+          this.autoplay();
+        }, 1000);
     });
   }
   createForms() {

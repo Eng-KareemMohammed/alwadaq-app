@@ -25,7 +25,7 @@ export class FcmService {
     private storage: Storage,
     private router: Router,
     private helpers: HelpersService,
-    private http: HttpClient
+    private http: HttpClient // private authService: AuthService
   ) {}
 
   async initPush() {
@@ -37,7 +37,7 @@ export class FcmService {
       return;
     await PushNotifications.requestPermissions();
     await PushNotifications.register();
-    // this.notificationsAll();
+    this.notificationsAll();
     // this.notificationsOne()
   }
 
@@ -49,12 +49,63 @@ export class FcmService {
       'pushNotificationReceived',
       async (notification: any) => {
         this.presentToast(notification.title, notification.body);
+
+        if (notification.data.route == 'news') {
+          if (this.user.type == 1) {
+            this.navCtrl.navigateForward('/tabs1/news');
+          } else if (this.user.type == 2) {
+            this.navCtrl.navigateForward('/tabs2/news');
+          }
+
+          this.navCtrl.navigateForward('/news');
+        } else if (notification.data.route == 'orders') {
+          if (this.user.type == 1) {
+            this.navCtrl.navigateForward('/tabs1/home');
+          } else if (this.user.type == 2) {
+            this.navCtrl.navigateForward('/tabs2/orders');
+          }
+        } else if (
+          notification.data.route == 'clients' &&
+          this.user.type == 2
+        ) {
+          this.navCtrl.navigateForward('/tabs2/clients');
+        } else if (notification.data.route == 'notification') {
+          this.navCtrl.navigateForward('/notification');
+        }
+        //  else if (noti.notification.data == 'member') {
+        //   this.navCtrl.navigateForward('/tabs/members');
+        // }
+        else if (notification.data.route == 'userdeleted') {
+          // this.authService.logOut();
+          await this.unsubscribeOne();
+          await this.unsubscribeAll();
+          await this.storage.clear();
+          this.navCtrl.navigateRoot('/login');
+        }
       }
     );
     PushNotifications.addListener(
       'pushNotificationActionPerformed',
       async (noti) => {
-        this.navCtrl.navigateForward('/notification');
+        console.log(noti.notification.data);
+
+        // if (noti.notification.data.route == 'news') {
+        //   this.navCtrl.navigateForward('/news');
+        // } else if (noti.notification.data.route == 'orders') {
+        //   this.navCtrl.navigateForward('/tabs2/orders');
+        // } else if (noti.notification.data.route == 'clients') {
+        //   this.navCtrl.navigateForward('/tabs2/clients');
+        // } else if (noti.notification.data.route == 'notification') {
+        //   this.navCtrl.navigateForward('/notification');
+        // }
+        // //  else if (noti.notification.data == 'member') {
+        // //   this.navCtrl.navigateForward('/tabs/members');
+        // // }
+        // else if (noti.notification.data.route == 'userdeleted') {
+        //   // this.authService.logOut();
+        //   await this.storage.clear();
+        //   this.navCtrl.navigateRoot('/login');
+        // }
       }
     );
   }
@@ -75,12 +126,12 @@ export class FcmService {
     if (this.user.phone) {
       await FCM.subscribeTo({ topic: `user-${this.user.phone}` });
 
-      PushNotifications.addListener(
-        'pushNotificationReceived',
-        async (notification) => {
-          this.presentToast(notification.title, notification.body);
-        }
-      );
+      // PushNotifications.addListener(
+      //   'pushNotificationReceived',
+      //   async (notification) => {
+      //     this.presentToast(notification.title, notification.body);
+      //   }
+      // );
     }
   }
 
@@ -122,7 +173,7 @@ export class FcmService {
       Capacitor.getPlatform() == 'electron'
     )
       return;
-    if (this.user.phone)
+    if (this.user?.phone)
       await FCM.unsubscribeFrom({ topic: `user-${this.user.phone}` }).catch(
         (err) => {
           console.log(err);
@@ -137,15 +188,22 @@ export class FcmService {
       position: 'top',
       duration: 3000,
     });
-    this.sound();
+    this.notificationSound();
     await toast.present();
     toast.addEventListener('click', async () => {
-      this.helpers.emitEvent(Events.refreshOrders);
+      // this.helpers.emitEvent(Events.refreshOrders);
       // this.navCtrl.navigateForward('/notification');
       await toast.dismiss();
     });
   }
+  notificationSound() {
+    const sound = new Howl({
+      src: ['../../../assets/short-noti.mp3'],
+      volume: 1,
+    });
 
+    sound.play();
+  }
   // NotificationSound
   sound() {
     const sound = new Howl({

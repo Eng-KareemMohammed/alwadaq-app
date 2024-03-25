@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { DataService } from 'src/app/services/data/data.service';
 import { HelpersService } from 'src/app/services/helpers/helpers.service';
@@ -22,6 +22,7 @@ export class HomePage implements OnInit {
     private helpers: HelpersService,
     private iab: InAppBrowser,
     private navCtrl: NavController,
+    private alertCtrl: AlertController,
     private locationService: LocationService
   ) {}
 
@@ -67,12 +68,19 @@ export class HomePage implements OnInit {
         } else {
           this.dataService
             .postData('/order', { service_id: this.selectedService })
-            .subscribe((res: any) => {
-              console.log(res);
-              this.isModelOpen = false;
-              this.selectedService = null;
-              this.helpers.presentToast('تم ارسال طلبك بنجاح');
-            });
+            .subscribe(
+              (res: any) => {
+                console.log(res);
+                this.isModelOpen = false;
+                this.selectedService = null;
+                this.helpers.presentToast('تم ارسال طلبك بنجاح');
+              },
+              (err) => {
+                this.helpers.presentToast(
+                  `خطأ بالشبكة حاول مرة اخري ${err.error}}`
+                );
+              }
+            );
         }
       });
     }
@@ -85,5 +93,42 @@ export class HomePage implements OnInit {
     } else {
       this.isModelOpen = true;
     }
+  }
+  async disableAccount() {
+    const alert = await this.alertCtrl.create({
+      header: 'تعطيل الحساب',
+      message: 'هل انت متأكد من تعطيل الحساب',
+      mode: 'ios',
+      buttons: [
+        {
+          text: 'لا',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          },
+        },
+        {
+          text: 'نعم',
+          handler: () => {
+            this.dataService
+              .editData(`/user/update/${this.authService.userData?._id}`, {
+                status: 3,
+              })
+              .subscribe(
+                (res) => {
+                  // this.authService.userData = res;
+                  this.authService.logOut();
+                  this.helpers.presentToast('تم تعطيل الحساب');
+                },
+                (err) => {
+                  this.helpers.presentToast('حدث خطأ');
+                }
+              );
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 }

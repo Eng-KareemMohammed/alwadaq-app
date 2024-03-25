@@ -28,6 +28,7 @@ export class AddClientPage implements OnInit, OnDestroy {
   imagesFromDevice: any[] = [];
   imagesToSubmit: any[] = [];
   client: any = null;
+  houseFacade: any = null;
   constructor(
     private navCtrl: NavController,
     private fb: FormBuilder,
@@ -48,7 +49,7 @@ export class AddClientPage implements OnInit, OnDestroy {
       phone: ['', Validators.required],
       password: ['', Validators.required],
       service_id: ['', Validators.required],
-      // zone_id: ['', Validators.required],
+      zone_id: ['', Validators.required],
       service_barcode: ['', Validators.required],
     });
   }
@@ -56,14 +57,19 @@ export class AddClientPage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     this.client = this.dataService.params.client;
+    this.zones = this.authService.userData.zone_id;
     if (this.client) {
+      if (this.client.houseFacade) this.houseFacade = this.client.houseFacade;
+
       delete this.client.password;
       this.location = this.client.location;
       this.form.patchValue(this.client);
       this.imagesToSubmit = this.client.attachment;
-
+      // this.zones = this.client.zone_id
+      //   ? this.client.zone_id
+      //   : this.authService.userData.zone_id;
       if (this.client.zone_id)
-        this.form.patchValue({ zone_id: this.client.zone_id?._id });
+        this.form.patchValue({ zone_id: this.client.zone_id?.[0]?._id });
       if (this.client.service_id)
         this.form.patchValue({ service_id: this.client.service_id._id });
     }
@@ -82,12 +88,21 @@ export class AddClientPage implements OnInit, OnDestroy {
   }
 
   async submit() {
+    if (this.imagesFromDevice.length + this.imagesToSubmit.length < 2) {
+      return this.helpers.presentToast('المستمسكات يجب ان لا تقل عن 2 صورة');
+    }
+    if (!this.houseFacade) {
+      return this.helpers.presentToast('يجب اضافة صورة لواجهة المنزل');
+    }
     if (!this.client && this.form.invalid)
       return this.helpers.presentToast('الرجاء ادخال جميع الحقول');
 
     await this.helpers.showLoading();
     if (this.client) {
-      this.update();
+      // this.update();
+      this.client?.type == 1 && this.client?.status == 1
+        ? this.update()
+        : this.addUpdateRequest();
     } else {
       this.register();
     }
@@ -96,6 +111,9 @@ export class AddClientPage implements OnInit, OnDestroy {
     let uploadedImages = this.imagesFromDevice.length
       ? await this.cameraService.uploadImages(this.imagesFromDevice)
       : [];
+    let houseFacade = this.houseFacade
+      ? await this.cameraService.uploadOneImage(this.houseFacade)
+      : '';
     this.imagesToSubmit = this.imagesToSubmit.concat(uploadedImages);
     let attachment = this.imagesToSubmit;
     let body = {
@@ -103,11 +121,47 @@ export class AddClientPage implements OnInit, OnDestroy {
       type: 1,
       status: 2,
       location: this.location,
-      zone_id: this.authService.userData.zone_id,
+      // zone_id: this.authService.userData.zone_id,
       attachment,
+      houseFacade,
     };
     this.dataService.postData(`/user/register`, body).subscribe(
       (res: any) => {
+        this.helpers.dismissLoading();
+        this.helpers.presentToast('تمت العملية بنجاح');
+        this.navCtrl.navigateBack('/tabs2/clients');
+        this.helpers.emitEvent(Events.refreshUsers);
+      },
+      (err) => {
+        this.helpers.dismissLoading();
+        this.helpers.presentToast(err.error.message);
+      }
+    );
+  }
+
+  async addUpdateRequest() {
+    // await this.helpers.showLoading('جاري ارسال الطلب');
+    let houseFacade =
+      this.houseFacade && typeof this.houseFacade != 'string'
+        ? await this.cameraService.uploadOneImage(this.houseFacade)
+        : this.houseFacade || '';
+    let newData = {
+      ...this.form.value,
+      location: this.location,
+      houseFacade,
+    };
+    if (!newData.password) delete newData.password;
+
+    let body = {
+      newData: newData,
+      client_id: this.client._id,
+      delegate_id: this.authService.userData._id,
+    };
+
+    this.dataService.postData(`/updateReq/`, body).subscribe(
+      (res: any) => {
+        console.log(res);
+
         this.helpers.dismissLoading();
         this.helpers.presentToast('تمت العملية بنجاح');
         this.navCtrl.navigateBack('/tabs2/clients');
@@ -123,12 +177,17 @@ export class AddClientPage implements OnInit, OnDestroy {
     let uploadedImages = this.imagesFromDevice.length
       ? await this.cameraService.uploadImages(this.imagesFromDevice)
       : [];
+    let houseFacade =
+      this.houseFacade && typeof this.houseFacade != 'string'
+        ? await this.cameraService.uploadOneImage(this.houseFacade)
+        : this.houseFacade || '';
     this.imagesToSubmit = this.imagesToSubmit.concat(uploadedImages);
     let attachment = this.imagesToSubmit;
     let body = {
       ...this.form.value,
       location: this.location,
       attachment,
+      houseFacade,
     };
     if (!body.password) delete body.password;
     this.dataService
@@ -202,7 +261,11 @@ export class AddClientPage implements OnInit, OnDestroy {
       if (val) this.imagesFromDevice.push(val);
     });
   }
-
+  selectHouseFacadeImage() {
+    this.cameraService.showActionSheet().then((val) => {
+      if (val) this.houseFacade = val;
+    });
+  }
   async deleteImage(img: any, index: number, type: string) {
     const alert = await this.alertCtrl.create({
       header: 'حذف الصورة',
