@@ -92,7 +92,7 @@
       },
       {
         "file": ".nx/cache/file-map.json",
-        "hash": "12890991648414084807"
+        "hash": "6497293782143656880"
       },
       {
         "file": ".nx/cache/file-map.json~6e5053b0",
@@ -132,7 +132,7 @@
       },
       {
         "file": "android/app/build.gradle",
-        "hash": "8869740792261557073"
+        "hash": "4337464230134913480"
       },
       {
         "file": "android/app/capacitor.build.gradle",
@@ -144,7 +144,7 @@
       },
       {
         "file": "android/app/proguard-rules.pro",
-        "hash": "16319704539319765030"
+        "hash": "5966982844191511522"
       },
       {
         "file": "android/app/release/output-metadata.json",
@@ -360,7 +360,7 @@
       },
       {
         "file": "android/variables.gradle",
-        "hash": "9467210284462474397"
+        "hash": "429344719251208151"
       },
       {
         "file": "angular.json",
