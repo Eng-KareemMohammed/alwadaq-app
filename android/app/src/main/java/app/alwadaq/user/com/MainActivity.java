@@ -1,4 +1,4 @@
-package app.alwadaq.com;
+package app.alwadaq.user.com;
 
 import com.getcapacitor.BridgeActivity;
 

@@ -92,7 +92,7 @@
       },
       {
         "file": ".nx/cache/file-map.json",
-        "hash": "6200821081929268493"
+        "hash": "12890991648414084807"
       },
       {
         "file": ".nx/cache/file-map.json~6e5053b0",
@@ -132,7 +132,7 @@
       },
       {
         "file": "android/app/build.gradle",
-        "hash": "12798365150228867022"
+        "hash": "8869740792261557073"
       },
       {
         "file": "android/app/capacitor.build.gradle",
@@ -140,11 +140,15 @@
       },
       {
         "file": "android/app/google-services.json",
-        "hash": "3748504921949634450"
+        "hash": "3805309452021088864"
       },
       {
         "file": "android/app/proguard-rules.pro",
         "hash": "16319704539319765030"
+      },
+      {
+        "file": "android/app/release/output-metadata.json",
+        "hash": "17360446208482393013"
       },
       {
         "file": "android/app/src/androidTest/java/com/getcapacitor/myapp/ExampleInstrumentedTest.java",
@@ -152,11 +156,11 @@
       },
       {
         "file": "android/app/src/main/AndroidManifest.xml",
-        "hash": "9018089709758712478"
+        "hash": "17568033678036972802"
       },
       {
-        "file": "android/app/src/main/java/app/alwadaq/com/MainActivity.java",
-        "hash": "11705796024742257621"
+        "file": "android/app/src/main/java/app/alwadaq/user/com/MainActivity.java",
+        "hash": "2908088784046432189"
       },
       {
         "file": "android/app/src/main/res/drawable/ic_launcher_background.xml",
@@ -308,7 +312,7 @@
       },
       {
         "file": "android/app/src/main/res/values/strings.xml",
-        "hash": "11566012328086856733"
+        "hash": "6551393015975398086"
       },
       {
         "file": "android/app/src/main/res/values/styles.xml",
@@ -364,11 +368,11 @@
       },
       {
         "file": "capacitor.config.ts",
-        "hash": "7666821084328058037"
+        "hash": "7732182271694831234"
       },
       {
         "file": "google-services.json",
-        "hash": "3748504921949634450"
+        "hash": "6460556499543190782"
       },
       {
         "file": "ionic.config.json",
@@ -396,7 +400,7 @@
       },
       {
         "file": "private_key.pepk",
-        "hash": "9113943540378784032"
+        "hash": "17859418137390928129"
       },
       {
         "file": "resources/android/icon/drawable-hdpi-icon.png",
