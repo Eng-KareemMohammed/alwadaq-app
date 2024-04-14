@@ -16,10 +16,11 @@
     "@capacitor/android": "5.5.1",
     "@capacitor/app": "5.0.6",
     "@capacitor/camera": "^5.0.8",
-    "@capacitor/core": "5.5.1",
+    "@capacitor/core": "^5.7.4",
     "@capacitor/filesystem": "^5.2.0",
     "@capacitor/geolocation": "^5.0.6",
     "@capacitor/haptics": "5.0.6",
+    "@capacitor/ios": "5.7.4",
     "@capacitor/keyboard": "5.0.6",
     "@capacitor/push-notifications": "^5.1.0",
     "@capacitor/splash-screen": "^5.0.6",
@@ -92,27 +93,19 @@
       },
       {
         "file": ".nx/cache/file-map.json",
-        "hash": "6497293782143656880"
-      },
-      {
-        "file": ".nx/cache/file-map.json~6e5053b0",
-        "hash": "10886299577821411796"
+        "hash": "11083765514945996560"
       },
       {
         "file": ".nx/cache/lockfile.hash",
-        "hash": "18137839965470990699"
+        "hash": "14049648120236540115"
       },
       {
         "file": ".nx/cache/parsed-lock-file.json",
-        "hash": "11033693950519940768"
+        "hash": "7340101005679170335"
       },
       {
         "file": ".nx/cache/project-graph.json",
-        "hash": "2849734227183583165"
-      },
-      {
-        "file": ".nx/cache/project-graph.json~8f83ad1b",
-        "hash": "2849734227183583165"
+        "hash": "5564640740808731720"
       },
       {
         "file": ".vscode/extensions.json",
@@ -121,6 +114,10 @@
       {
         "file": ".vscode/settings.json",
         "hash": "1151538777131426085"
+      },
+      {
+        "file": "GoogleService-Info.plist",
+        "hash": "3027997415725618198"
       },
       {
         "file": "android/.gitignore",
@@ -379,6 +376,150 @@
         "hash": "7678397169045049333"
       },
       {
+        "file": "ios/.gitignore",
+        "hash": "10149423503905542733"
+      },
+      {
+        "file": "ios/App/App/AppDelegate.swift",
+        "hash": "18068805698256355492"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-20x20@1x.png",
+        "hash": "14407256842990975482"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-20x20@2x-1.png",
+        "hash": "9594453117685137245"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-20x20@2x.png",
+        "hash": "9594453117685137245"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-20x20@3x.png",
+        "hash": "18027137966674867743"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-29x29@1x.png",
+        "hash": "13160986131112029756"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-29x29@2x-1.png",
+        "hash": "4876769157353602053"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-29x29@2x.png",
+        "hash": "4876769157353602053"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-29x29@3x.png",
+        "hash": "10123610356779750927"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-40x40@1x.png",
+        "hash": "9594453117685137245"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-40x40@2x-1.png",
+        "hash": "11854562775728435761"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-40x40@2x.png",
+        "hash": "11854562775728435761"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-40x40@3x.png",
+        "hash": "6350401813736565500"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png",
+        "hash": "16833275992145402193"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-60x60@2x.png",
+        "hash": "6350401813736565500"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-60x60@3x.png",
+        "hash": "7818977291717418917"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-76x76@1x.png",
+        "hash": "13584857985788475664"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-76x76@2x.png",
+        "hash": "13049018161267943004"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-83.5x83.5@2x.png",
+        "hash": "7898399279090201014"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json",
+        "hash": "7565600727854902026"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/Contents.json",
+        "hash": "4980636897773483266"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/Splash.imageset/Contents.json",
+        "hash": "18161130317584043719"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-1.png",
+        "hash": "8183571248252084594"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-2.png",
+        "hash": "8183571248252084594"
+      },
+      {
+        "file": "ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732.png",
+        "hash": "8183571248252084594"
+      },
+      {
+        "file": "ios/App/App/Base.lproj/LaunchScreen.storyboard",
+        "hash": "8403751218916301215"
+      },
+      {
+        "file": "ios/App/App/Base.lproj/Main.storyboard",
+        "hash": "9389051448912416571"
+      },
+      {
+        "file": "ios/App/App/GoogleService-Info.plist",
+        "hash": "4862328009815457632"
+      },
+      {
+        "file": "ios/App/App/Info.plist",
+        "hash": "16279622795023606937"
+      },
+      {
+        "file": "ios/App/App.xcodeproj/project.pbxproj",
+        "hash": "16976817528457555909"
+      },
+      {
+        "file": "ios/App/App.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
+        "hash": "11210196677568462708"
+      },
+      {
+        "file": "ios/App/App.xcworkspace/contents.xcworkspacedata",
+        "hash": "12133406313036213514"
+      },
+      {
+        "file": "ios/App/App.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
+        "hash": "15708111555404766564"
+      },
+      {
+        "file": "ios/App/Podfile",
+        "hash": "13479092448638666781"
+      },
+      {
+        "file": "ios/App/Podfile.lock",
+        "hash": "15424867398770511902"
+      },
+      {
         "file": "karma.conf.js",
         "hash": "13719387092471133633"
       },
@@ -392,11 +533,11 @@
       },
       {
         "file": "package-lock.json",
-        "hash": "2491821550793604058"
+        "hash": "5006038475558210808"
       },
       {
         "file": "package.json",
-        "hash": "11816729858471535791"
+        "hash": "8856191390948708127"
       },
       {
         "file": "private_key.pepk",
@@ -535,6 +676,194 @@
         "hash": "4467738949601400124"
       },
       {
+        "file": "resources/ios/icon/icon-1024.png",
+        "hash": "16833275992145402193"
+      },
+      {
+        "file": "resources/ios/icon/icon-108@2x.png",
+        "hash": "13074524973006753378"
+      },
+      {
+        "file": "resources/ios/icon/icon-20.png",
+        "hash": "14407256842990975482"
+      },
+      {
+        "file": "resources/ios/icon/icon-20@2x.png",
+        "hash": "9594453117685137245"
+      },
+      {
+        "file": "resources/ios/icon/icon-20@3x.png",
+        "hash": "18027137966674867743"
+      },
+      {
+        "file": "resources/ios/icon/icon-24@2x.png",
+        "hash": "1337611457405533142"
+      },
+      {
+        "file": "resources/ios/icon/icon-27.5@2x.png",
+        "hash": "6608214920678601334"
+      },
+      {
+        "file": "resources/ios/icon/icon-29.png",
+        "hash": "13160986131112029756"
+      },
+      {
+        "file": "resources/ios/icon/icon-29@2x.png",
+        "hash": "4876769157353602053"
+      },
+      {
+        "file": "resources/ios/icon/icon-29@3x.png",
+        "hash": "10123610356779750927"
+      },
+      {
+        "file": "resources/ios/icon/icon-40.png",
+        "hash": "9594453117685137245"
+      },
+      {
+        "file": "resources/ios/icon/icon-40@2x.png",
+        "hash": "11854562775728435761"
+      },
+      {
+        "file": "resources/ios/icon/icon-40@3x.png",
+        "hash": "6350401813736565500"
+      },
+      {
+        "file": "resources/ios/icon/icon-44@2x.png",
+        "hash": "1762196900694231700"
+      },
+      {
+        "file": "resources/ios/icon/icon-50.png",
+        "hash": "297596734851736645"
+      },
+      {
+        "file": "resources/ios/icon/icon-50@2x.png",
+        "hash": "18180865382788486187"
+      },
+      {
+        "file": "resources/ios/icon/icon-60.png",
+        "hash": "18027137966674867743"
+      },
+      {
+        "file": "resources/ios/icon/icon-60@2x.png",
+        "hash": "6350401813736565500"
+      },
+      {
+        "file": "resources/ios/icon/icon-60@3x.png",
+        "hash": "7818977291717418917"
+      },
+      {
+        "file": "resources/ios/icon/icon-72.png",
+        "hash": "11482512510515730745"
+      },
+      {
+        "file": "resources/ios/icon/icon-72@2x.png",
+        "hash": "1439647005454465416"
+      },
+      {
+        "file": "resources/ios/icon/icon-76.png",
+        "hash": "13584857985788475664"
+      },
+      {
+        "file": "resources/ios/icon/icon-76@2x.png",
+        "hash": "13049018161267943004"
+      },
+      {
+        "file": "resources/ios/icon/icon-83.5@2x.png",
+        "hash": "7898399279090201014"
+      },
+      {
+        "file": "resources/ios/icon/icon-86@2x.png",
+        "hash": "8857521561106453266"
+      },
+      {
+        "file": "resources/ios/icon/icon-98@2x.png",
+        "hash": "2553053329200991650"
+      },
+      {
+        "file": "resources/ios/icon/icon.png",
+        "hash": "16656517849455284247"
+      },
+      {
+        "file": "resources/ios/icon/icon@2x.png",
+        "hash": "6846734292197649981"
+      },
+      {
+        "file": "resources/ios/splash/Default-1792h~iphone.png",
+        "hash": "12872459359872654632"
+      },
+      {
+        "file": "resources/ios/splash/Default-2436h.png",
+        "hash": "16611585693936291081"
+      },
+      {
+        "file": "resources/ios/splash/Default-2688h~iphone.png",
+        "hash": "1763481253643132676"
+      },
+      {
+        "file": "resources/ios/splash/Default-568h@2x~iphone.png",
+        "hash": "15990541200298198686"
+      },
+      {
+        "file": "resources/ios/splash/Default-667h.png",
+        "hash": "14389207298814015959"
+      },
+      {
+        "file": "resources/ios/splash/Default-736h.png",
+        "hash": "7491281157860445765"
+      },
+      {
+        "file": "resources/ios/splash/Default-Landscape-1792h~iphone.png",
+        "hash": "6766816924486328967"
+      },
+      {
+        "file": "resources/ios/splash/Default-Landscape-2436h.png",
+        "hash": "11182118254226910637"
+      },
+      {
+        "file": "resources/ios/splash/Default-Landscape-2688h~iphone.png",
+        "hash": "1707392191742701158"
+      },
+      {
+        "file": "resources/ios/splash/Default-Landscape-736h.png",
+        "hash": "11299227165235174418"
+      },
+      {
+        "file": "resources/ios/splash/Default-Landscape@2x~ipad.png",
+        "hash": "15658751330119593108"
+      },
+      {
+        "file": "resources/ios/splash/Default-Landscape@~ipadpro.png",
+        "hash": "15669906504770297627"
+      },
+      {
+        "file": "resources/ios/splash/Default-Landscape~ipad.png",
+        "hash": "10770662206979284219"
+      },
+      {
+        "file": "resources/ios/splash/Default-Portrait@2x~ipad.png",
+        "hash": "16690754224715336560"
+      },
+      {
+        "file": "resources/ios/splash/Default-Portrait@~ipadpro.png",
+        "hash": "1604701348244193846"
+      },
+      {
+        "file": "resources/ios/splash/Default-Portrait~ipad.png",
+        "hash": "12495620722641140720"
+      },
+      {
+        "file": "resources/ios/splash/Default@2x~iphone.png",
+        "hash": "4891305862278154714"
+      },
+      {
+        "file": "resources/ios/splash/Default@2x~universal~anyany.png",
+        "hash": "8183571248252084594"
+      },
+      {
+        "file": "resources/ios/splash/Default~iphone.png",
+        "hash": "15300092463919279884"
+      },
+      {
         "file": "resources/splash.png",
         "hash": "6950769442881314347"
       },
@@ -628,11 +957,11 @@
       },
       {
         "file": "src/app/pages/add-client/add-client.page.html",
-        "hash": "3812741954238362855"
+        "hash": "13342174539644528763"
       },
       {
         "file": "src/app/pages/add-client/add-client.page.scss",
-        "hash": "1608463630411819733"
+        "hash": "9368535812408799276"
       },
       {
         "file": "src/app/pages/add-client/add-client.page.spec.ts",
@@ -640,7 +969,7 @@
       },
       {
         "file": "src/app/pages/add-client/add-client.page.ts",
-        "hash": "4566391634840216361"
+        "hash": "5619022242906351754"
       },
       {
         "file": "src/app/pages/change-pass/change-pass-routing.module.ts",

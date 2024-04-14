@@ -58,6 +58,7 @@ export class AddClientPage implements OnInit, OnDestroy {
   ionViewWillEnter() {
     this.client = this.dataService.params.client;
     this.zones = this.authService.userData.zone_id;
+
     if (this.client) {
       if (this.client.houseFacade) this.houseFacade = this.client.houseFacade;
 

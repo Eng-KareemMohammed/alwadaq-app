@@ -110,7 +110,7 @@
           <img [src]="houseFacade?.data || houseFacade" alt="">
         </div>
       </div>
-      <div class="imagesList" *ngIf="client?.type==1 &&client?.status==1 ">
+      <div class="imagesList" *ngIf="!client ||client?.status==1 ">
         <h1 class="animate__animated animate__fadeIn">المستمسكات</h1>
         <div class="gridSystem">
           <div class="box" (click)="selectImage()">
